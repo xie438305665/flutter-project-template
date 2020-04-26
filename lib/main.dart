@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 
-void main() => (runApp(new App()));
+import 'navigator/app_route.dart';
 
-/// @description:
+/// @description: 入口
 /// @author xcl qq:244672784
 /// @Date 2020/4/25 10:42
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-            title: Text("App")
-        ),
-        body: Container(),
-      ),
-
+      initialRoute: "../pages/_loginPage",
+      routes: AppRoute.getRoutes(context),
     );
   }
 }
+
+void main() => (runApp(new App()));

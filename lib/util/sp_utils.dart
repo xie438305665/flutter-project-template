@@ -1,11 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// @description:本地轻量级存储 工具类
-
 /// @author xcl qq:244672784
-
 /// @Date 2020/4/18 12:59
-
 class SpUtils {
   SpUtils._internal();
 

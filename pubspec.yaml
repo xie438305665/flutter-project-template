@@ -41,8 +41,14 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - images/2.0x/ic_splash.jpg
-    - images/3.0x/ic_splash.jpg
+    - images/ic_ims_log.png
+    - images/ic_splash.jpg
+    - images/2.0x/ic_2x_login_bg.png
+    - images/2.0x/ic_2x_login_user.png
+    - images/2.0x/ic_2x_login_password.png
+    - images/3.0x/ic_3x_login_bg.png
+    - images/3.0x/ic_3x_login_user.png
+    - images/3.0x/ic_3x_login_password.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

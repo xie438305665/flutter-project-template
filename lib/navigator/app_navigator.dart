@@ -4,9 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// @description:导航类
-
 /// @author xcl qq:244672784
-
 /// @Date 2020/4/25 12:59
 class AppNavigator {
   static AppNavigator _navigator;
@@ -66,6 +64,12 @@ class AppNavigator {
     Navigator.of(context)
         .pushNamedAndRemoveUntil(newRouteName, predicate)
         .then(futureOr, onError: function);
+  }
+
+  ///跳转到routeName 界面  当前界面销毁
+  static void toPushReplacementNamed(BuildContext context, String routeName,
+      {Object arguments}) {
+    Navigator.of(context).pushReplacementNamed(routeName, arguments: arguments);
   }
 
   static void onNavigatorRoute(
