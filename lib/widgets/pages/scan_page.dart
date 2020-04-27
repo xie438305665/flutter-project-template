@@ -1,16 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:zsy/common/utils/toast_util.dart';
 import 'package:zsy/routes/app_navigator.dart';
 
 ///@description: 扫描
 ///@author xcl qq:244672784
 ///@Date 2020/4/27 14:38
-class ScanPage extends StatelessWidget {
+class ScanPage extends StatefulWidget {
+  @override
+  _ScanPageState createState() => _ScanPageState();
+}
+
+class _ScanPageState extends State<ScanPage> {
+  DateTime _lastPressedAt; //上次点击时间
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "scan_page",
-      home: Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        if (_lastPressedAt == null ||
+            DateTime.now().difference(_lastPressedAt) > Duration(seconds: 1)) {
+          _lastPressedAt = DateTime.now();
+          ToastUtil.show("连续按2次退出");
+          return false;
+        }
+        ToastUtil.show("退出");
+        return true;
+      },
+      child: Scaffold(
         appBar: AppBar(
+          leading: BackButton(
+            color: Colors.black,
+          ),
           elevation: 0,
           backgroundColor: Colors.grey[50],
           centerTitle: true,

@@ -10,104 +10,119 @@ class SignPage extends StatefulWidget {
   _SignPageState createState() => _SignPageState();
 }
 
-class _SignPageState extends State<SignPage> {
+class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
   String args;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
   }
 
   @override
   Widget build(BuildContext context) {
     args = ModalRoute.of(context).settings.arguments;
-    return MaterialApp(
-      title: "sign_page",
-      home: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.grey[50],
-          centerTitle: true,
-          title: Text(
-            "签字",
-            style: TextStyle(color: Colors.black),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(color: Colors.black),
+        elevation: 0,
+        backgroundColor: Colors.grey[50],
+        centerTitle: true,
+        title: Text(
+          "签字",
+          style: TextStyle(color: Colors.black),
         ),
-        body: Column(
-          children: <Widget>[
-            WarningWidget(),
-            ContentWidget("考试名称：", "直接展示学管端的产品1111111111111111列表的名称列表的名称"),
-            ContentWidget("类型：", "考试类产品"),
-            LineWidget(),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(right: 5),
-                    color: Colors.green,
-                    width: 1,
-                    height: 18,
-                  ),
-                  Expanded(child: Text("选择班级和产品")),
-                  GestureDetector(
-                    child: Text(
-                      "全选",
-                      style: TextStyle(color: Colors.green),
-                    ),
-                    onTap: () => ToastUtil.show("全选"),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                    ),
-                    children: _gridList(),
-                  )),
-            ),
-            LineWidget(),
-            GestureDetector(
-              child: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.all(10),
-                width: double.infinity,
-                height: 200,
-                color: Colors.grey,
-                child: Text(
-                  "点击签名",
-                  style: TextStyle(color: Colors.green),
-                ),
-              ),
-              onTap: () async => {AppNavigator.toPush(context, "/canvasPage")},
-            ),
-            Container(
-              height: 50,
-              margin: EdgeInsets.all(20),
-              width: double.infinity,
-              child: RaisedButton(
-                  elevation: 2.0,
+      ),
+      body: Column(
+        children: <Widget>[
+          WarningWidget(),
+          ContentWidget("考试名称：", "直接展示学管端的产品1111111111111111列表的名称列表的名称"),
+          ContentWidget("类型：", "考试类产品"),
+          LineWidget(),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(right: 5),
                   color: Colors.green,
-                  textColor: Colors.white,
+                  width: 1,
+                  height: 18,
+                ),
+                Expanded(child: Text("选择班级和产品")),
+                GestureDetector(
                   child: Text(
-                    "确认上传",
-                    style: TextStyle(fontSize: 20),
+                    "全选",
+                    style: TextStyle(color: Colors.green),
                   ),
-                  onPressed: () async => ToastUtil.show("上传")),
+                  onTap: () => ToastUtil.show("全选"),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                  ),
+                  children: _gridList(),
+                )),
+          ),
+          LineWidget(),
+          GestureDetector(
+            child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.all(10),
+              width: double.infinity,
+              height: 200,
+              color: Colors.grey,
+              child: Text(
+                "点击签名",
+                style: TextStyle(color: Colors.green),
+              ),
+            ),
+            onTap: () async => {
+              AppNavigator.toPush(
+                context,
+                "/canvasPage",
+              )
+            },
+          ),
+          Container(
+            height: 50,
+            margin: EdgeInsets.all(20),
+            width: double.infinity,
+            child: RaisedButton(
+                elevation: 2.0,
+                color: Colors.green,
+                textColor: Colors.white,
+                child: Text(
+                  "确认上传",
+                  style: TextStyle(fontSize: 20),
+                ),
+                onPressed: () async => ToastUtil.show("上传")),
+          ),
+        ],
       ),
     );
   }
 }
+
 
 ///头部警告
 class WarningWidget extends StatelessWidget {

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zsy/common/utils/toast_util.dart';
 
 /// @description:导航类
 /// @author xcl qq:244672784
@@ -27,12 +28,14 @@ class AppNavigator {
   }
 
   ///界面跳转带返回值
-  static void toPushThen(BuildContext context, String routeName,
-      FutureOr futureOr, Function function,
+  static void toPushThen(
+      BuildContext context, String routeName, FutureOr futureOr,
       {Object arguments}) {
     Navigator.of(context)
         .pushNamed(routeName, arguments: arguments)
-        .then(futureOr, onError: function);
+        .then(futureOr, onError: () {
+      ToastUtil.show("返回异常");
+    });
   }
 
   ///返回上一个界面

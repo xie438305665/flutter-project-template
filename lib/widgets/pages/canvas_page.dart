@@ -14,21 +14,31 @@ class _CanvasPageState extends State<CanvasPage> {
   @override
   void initState() {
     super.initState();
-    OrientationPlugin.forceOrientation(DeviceOrientation.portraitDown);
+    OrientationPlugin.forceOrientation(DeviceOrientation.landscapeLeft);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "canvas_page",
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("canvas_page"),
-        ),
-        body: Container(
-          child: Text("canvas_page"),
+    return Scaffold(
+      appBar: AppBar(
+        leading:BackButton(color: Colors.black),
+        elevation: 0,
+        backgroundColor: Colors.grey[50],
+        centerTitle: true,
+        title: Text(
+          "名称",
+          style: TextStyle(color: Colors.black),
         ),
       ),
+      body: Container(
+        child: Text("canvas_page"),
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
+    super.dispose();
   }
 }
