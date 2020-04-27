@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:orientation/orientation.dart';
 
 ///@description: 画布签名
 ///@author xcl qq:244672784
@@ -11,9 +12,13 @@ class CanvasPage extends StatefulWidget {
 
 class _CanvasPageState extends State<CanvasPage> {
   @override
+  void initState() {
+    super.initState();
+    OrientationPlugin.forceOrientation(DeviceOrientation.portraitDown);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
       title: "canvas_page",
       home: Scaffold(
