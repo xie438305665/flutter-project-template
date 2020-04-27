@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zsy/utils/toast_util.dart';
+import 'package:zsy/common/utils/toast_util.dart';
+import 'package:zsy/routes/app_navigator.dart';
 
-///@description:
+///@description:签名
 ///@author xcl qq:244672784
 ///@Date 2020/4/27 15:15
 class SignPage extends StatefulWidget {
@@ -73,16 +74,19 @@ class _SignPageState extends State<SignPage> {
                   )),
             ),
             LineWidget(),
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.all(10),
-              width: double.infinity,
-              height: 200,
-              color: Colors.grey,
-              child: Text(
-                "点击签名",
-                style: TextStyle(color: Colors.green),
+            GestureDetector(
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.all(10),
+                width: double.infinity,
+                height: 200,
+                color: Colors.grey,
+                child: Text(
+                  "点击签名",
+                  style: TextStyle(color: Colors.green),
+                ),
               ),
+              onTap: () async => {AppNavigator.toPush(context, "/canvasPage")},
             ),
             Container(
               height: 50,

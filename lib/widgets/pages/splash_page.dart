@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zsy/navigator/app_navigator.dart';
+import 'package:zsy/routes/app_navigator.dart';
 
 ///启动页
 class SplashPage extends StatefulWidget {

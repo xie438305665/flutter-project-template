@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zsy/navigator/app_navigator.dart';
+import 'package:zsy/routes/app_navigator.dart';
 
 ///@description: 扫描
 ///@author xcl qq:244672784

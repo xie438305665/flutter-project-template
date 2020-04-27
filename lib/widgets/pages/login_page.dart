@@ -3,10 +3,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zsy/navigator/app_navigator.dart';
+import 'package:zsy/routes/app_navigator.dart';
 
-///@author xcl
-///@Da 2020/4/26
+///@description:登录
+///@author xcl qq:244672784
+///@Date 2020/4/27 14:38
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
