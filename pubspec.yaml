@@ -47,9 +47,13 @@ flutter:
     - images/2.0x/ic_2x_login_bg.png
     - images/2.0x/ic_2x_login_user.png
     - images/2.0x/ic_2x_login_password.png
+    - images/2.0x/ic_2x_qr_code_log.png
+    - images/2.0x/ic_2x_warning.png
     - images/3.0x/ic_3x_login_bg.png
     - images/3.0x/ic_3x_login_user.png
     - images/3.0x/ic_3x_login_password.png
+    - images/3.0x/ic_3x_qr_code_log.png
+    - images/3.0x/ic_3x_warning.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

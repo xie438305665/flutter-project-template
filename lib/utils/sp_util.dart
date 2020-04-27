@@ -3,18 +3,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// @description:本地轻量级存储 工具类
 /// @author xcl qq:244672784
 /// @Date 2020/4/18 12:59
-class SpUtils {
-  SpUtils._internal();
+class SpUtil {
+  SpUtil._internal();
 
-  static SpUtils spUtils;
+  static SpUtil spUtils;
 
-  static SpUtils get instance => _getInstance();
+  static SpUtil get instance => _getInstance();
 
-  factory SpUtils() => _getInstance();
+  factory SpUtil() => _getInstance();
 
-  static SpUtils _getInstance() {
+  static SpUtil _getInstance() {
     if (spUtils == null) {
-      spUtils = new SpUtils();
+      spUtils = new SpUtil();
     }
     return spUtils;
   }

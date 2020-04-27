@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zsy/navigator/app_navigator.dart';
 
 ///启动页
@@ -12,13 +13,15 @@ class SplashPage extends StatefulWidget {
 class SplashState extends State {
   @override
   void initState() {
+    super.initState();
     Future.delayed(Duration(milliseconds: 0), () {
-      AppNavigator.toPushReplacementNamed(context, "../pages/_loginPage");
+      AppNavigator.toPushReplacementNamed(context, "/loginPage");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return null;
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+    return Image.asset("images/ic_splash.jpg");
   }
 }
