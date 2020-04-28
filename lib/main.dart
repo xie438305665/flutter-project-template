@@ -14,18 +14,18 @@ class App extends StatelessWidget {
     return MaterialApp(
       initialRoute: "/loginPage",
       routes: AppRoute.getRoutes(context),
-      navigatorObservers: [GLObserver()],
+      navigatorObservers: [NavigatorObserverListener()],
     );
   }
 }
 
-class GLObserver extends NavigatorObserver {
-// 添加导航监听后，跳转的时候需要使用Navigator.push路由
+/// Navigator 监听
+class NavigatorObserverListener extends NavigatorObserver {
   @override
   void didPush(Route route, Route previousRoute) {
     super.didPush(route, previousRoute);
     if (previousRoute != null && route.settings.name == "/canvasPage") {
-      OrientationPlugin.forceOrientation(DeviceOrientation.landscapeLeft);
+//      OrientationPlugin.forceOrientation(DeviceOrientation.landscapeLeft);
     }
   }
 
