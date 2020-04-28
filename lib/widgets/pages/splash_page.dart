@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zsy/routes/app_navigator.dart';
+import 'package:zsy/routes/app_route.dart';
 
 ///启动页
 class SplashPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class SplashState extends State {
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 1), () {
-      AppNavigator.toPushReplacementNamed(context, "/loginPage");
+      AppNavigator.toPushReplacementNamed(context, AppRoute.loginPage);
     });
   }
 

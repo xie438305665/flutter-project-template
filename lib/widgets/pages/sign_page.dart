@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zsy/common/utils/toast_util.dart';
 import 'package:zsy/routes/app_navigator.dart';
+import 'package:zsy/routes/app_route.dart';
 
 ///@description:签名
 ///@author xcl qq:244672784
@@ -26,8 +27,7 @@ class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-  }
+  void didChangeAppLifecycleState(AppLifecycleState state) {}
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +99,7 @@ class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
             onTap: () async => {
               AppNavigator.toPush(
                 context,
-                "/canvasPage",
+                AppRoute.canvasPage,
               )
             },
           ),
@@ -122,7 +122,6 @@ class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
     );
   }
 }
-
 
 ///头部警告
 class WarningWidget extends StatelessWidget {

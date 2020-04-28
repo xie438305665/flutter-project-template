@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zsy/common/utils/toast_util.dart';
 import 'package:zsy/routes/app_navigator.dart';
+import 'package:zsy/routes/app_route.dart';
 
 ///@description: 扫描
 ///@author xcl qq:244672784
@@ -57,7 +58,7 @@ class _ScanPageState extends State<ScanPage> {
                   color: Colors.green,
                   elevation: 2.0,
                   onPressed: () async => AppNavigator.toPush(
-                      context, "/signPage",
+                      context, AppRoute.signPage,
                       arguments: "2222222"),
                   child: Text("二维码扫描"),
                   textColor: Colors.white,
