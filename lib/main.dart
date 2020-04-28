@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:orientation/orientation.dart';
 
 import 'routes/app_route.dart';
 
@@ -10,7 +8,6 @@ import 'routes/app_route.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
     return MaterialApp(
       initialRoute: "/loginPage",
       routes: AppRoute.getRoutes(context),
@@ -33,7 +30,7 @@ class NavigatorObserverListener extends NavigatorObserver {
   void didPop(Route route, Route previousRoute) {
     super.didPop(route, previousRoute);
     if (previousRoute != null && previousRoute.settings.name == "/signPage") {
-      OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
+//      OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
     }
   }
 }

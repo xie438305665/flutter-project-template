@@ -153,15 +153,11 @@ class _SignWidgetState extends State<SignWidget> {
 
   /// 截图，并且返回图片的缓存地址
   Future<String> _capturePng(File toFile, GlobalKey globalKey) async {
-    // 1. 获取 RenderRepaintBoundary
     RenderRepaintBoundary boundary =
         globalKey.currentContext.findRenderObject();
-    // 2. 生成 Image
     var image = await boundary.toImage();
-    // 3. 生成 Uint8List
     ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
     Uint8List pngBytes = byteData.buffer.asUint8List();
-    // 4. 本地存储Image
     toFile.writeAsBytes(pngBytes);
     return toFile.path;
   }
