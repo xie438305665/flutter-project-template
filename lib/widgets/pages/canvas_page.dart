@@ -41,7 +41,7 @@ class _CanvasPageState extends State<CanvasPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
+            margin: EdgeInsets.all(10),
             alignment: Alignment.center,
             child: RaisedButton(
               color: Colors.green,

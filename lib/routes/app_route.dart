@@ -9,11 +9,11 @@ import 'package:zsy/widgets/pages/splash_page.dart';
 class AppRoute {
   AppRoute._();
 
-  static String splashPage = "/"; //启动页
-  static String loginPage = "/loginPage"; //登录
-  static String scanPage = "/scanPage"; //扫描
-  static String signPage = "/signPage"; //签名
-  static String canvasPage = "/canvasPage"; //画布签名
+  static const String splashPage = "/"; //启动页
+  static const String loginPage = "/loginPage"; //登录
+  static const String scanPage = "/scanPage"; //扫描
+  static const String signPage = "/signPage"; //签名
+  static const String canvasPage = "/canvasPage"; //画布签名
 
   static Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     return {

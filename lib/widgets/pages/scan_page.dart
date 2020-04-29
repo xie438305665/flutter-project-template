@@ -19,12 +19,12 @@ class _ScanPageState extends State<ScanPage> {
     return WillPopScope(
       onWillPop: () async {
         if (_lastPressedAt == null ||
-            DateTime.now().difference(_lastPressedAt) > Duration(seconds: 1)) {
+            DateTime.now().difference(_lastPressedAt) > Duration(seconds: 2)) {
           _lastPressedAt = DateTime.now();
-          ToastUtil.show("连续按2次退出");
+          ToastUtil.show("再按一次退出");
           return false;
         }
-        ToastUtil.show("退出");
+        AppNavigator.backDeskTop();
         return true;
       },
       child: Scaffold(

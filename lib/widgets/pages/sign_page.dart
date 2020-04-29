@@ -75,6 +75,7 @@ class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
             child: Padding(
                 padding: EdgeInsets.all(10),
                 child: GridView(
+                  physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 10,

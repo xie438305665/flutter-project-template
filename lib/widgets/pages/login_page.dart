@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:zsy/routes/app_navigator.dart';
+import 'package:zsy/routes/app_route.dart';
 
 ///@description:登录
 ///@author xcl qq:244672784
@@ -133,11 +135,12 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(fontSize: 20),
                       ),
                       onPressed: () async =>
-//                          AppNavigator.toPushReplacementNamed(
-//                              context, AppRoute.scanPage)
-                          setState(() {
-                            _isSuccess = false;
-                          })),
+                          AppNavigator.toPushReplacementNamed(
+                              context, AppRoute.scanPage)
+//                          setState(() {
+//                            _isSuccess = false;
+//                          })
+                      ),
                 )
               ],
             ),

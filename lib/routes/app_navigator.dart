@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zsy/common/utils/toast_util.dart';
 
 /// @description:导航类
@@ -48,8 +49,8 @@ class AppNavigator {
   }
 
   ///从routeName -> withName 界面    中间界面全部销毁
-  static void toPushNameAndRemoveUtil(BuildContext context, String newRouteName,
-      String withName, RoutePredicate predicate,
+  static void toPushNameAndRemoveUtil(
+      BuildContext context, String newRouteName, RoutePredicate predicate,
       {Object arguments}) {
     Navigator.of(context)
         .pushNamedAndRemoveUntil(newRouteName, predicate, arguments: arguments);
@@ -59,7 +60,6 @@ class AppNavigator {
   static void toPushNameAndRemoveUtilThen(
       BuildContext context,
       String newRouteName,
-      String withName,
       FutureOr futureOr,
       Function function,
       RoutePredicate predicate,
@@ -75,9 +75,33 @@ class AppNavigator {
     Navigator.of(context).pushReplacementNamed(routeName, arguments: arguments);
   }
 
+  ///退出APP
+  static void toExit() {
+    SystemNavigator.pop();
+  }
+
   static void onNavigatorRoute(
       BuildContext context, String routeName, Route route,
       {Object arguments}) {
     Navigator.of(context).push(route);
+  }
+
+  ///通信管道
+  static const String BACK_DESKTOP = "backDesktop";
+
+  ///设置回退到手机桌面
+  static Future<bool> backDeskTop() async {
+    final platform = MethodChannel(BACK_DESKTOP);
+    try {
+      final bool out = await platform.invokeMethod(BACK_DESKTOP);
+      if (out) {
+        toExit();
+        debugPrint('返回手机到桌面');
+      }
+    } on PlatformException catch (e) {
+      debugPrint("通信失败(设置回退到安卓手机桌面:设置失败)");
+      print(e.toString());
+    }
+    return Future.value(false);
   }
 }
