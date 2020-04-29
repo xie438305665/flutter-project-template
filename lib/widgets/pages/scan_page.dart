@@ -1,4 +1,6 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zsy/common/utils/toast_util.dart';
 import 'package:zsy/routes/app_navigator.dart';
 import 'package:zsy/routes/app_route.dart';
@@ -13,6 +15,13 @@ class ScanPage extends StatefulWidget {
 
 class _ScanPageState extends State<ScanPage> {
   DateTime _lastPressedAt; //上次点击时间
+  String _scanText;
+
+  @override
+  void initState() {
+    super.initState();
+    _scanText = "二维码扫描";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +66,8 @@ class _ScanPageState extends State<ScanPage> {
                 child: RaisedButton(
                   color: Colors.green,
                   elevation: 2.0,
-                  onPressed: () async => AppNavigator.toPush(
-                      context, AppRoute.signPage,
-                      arguments: "2222222"),
-                  child: Text("二维码扫描"),
+                  onPressed: scan,
+                  child: Text(_scanText),
                   textColor: Colors.white,
                 ),
               )
@@ -69,5 +76,45 @@ class _ScanPageState extends State<ScanPage> {
         ),
       ),
     );
+  }
+
+  ///二维码扫描 相关配置https://pub.flutter-io.cn/documentation/barcode_scan/latest/
+  Future scan() async {
+    try {
+      var options = ScanOptions(
+        strings: {
+          "cancel": '取消',
+          "flash_on": '打开闪光灯',
+          "flash_off": '关闭闪光灯',
+        },
+        restrictFormat: BarcodeFormat.values,
+        useCamera: 8,
+        autoEnableFlash: false,
+        android: AndroidOptions(
+          useAutoFocus: true,
+        ),
+      );
+      ScanResult scanResult = await BarcodeScanner.scan(options: options);
+      if (scanResult.format == null ||
+          scanResult.format == BarcodeFormat.unknown) return;
+      if (scanResult.format != BarcodeFormat.qr) {
+        ToastUtil.show("二维码不规范，无法识别");
+      } else {
+        AppNavigator.toPush(context, AppRoute.signPage, arguments: scanResult);
+      }
+    } on PlatformException catch (e) {
+      var result = ScanResult(
+        type: ResultType.Error,
+        format: BarcodeFormat.unknown,
+      );
+      if (e.code == BarcodeScanner.cameraAccessDenied) {
+        setState(() {
+          result.rawContent = '未授予相机权限';
+        });
+      } else {
+        result.rawContent = 'Unknown error: $e';
+      }
+      ToastUtil.show(result.rawContent);
+    }
   }
 }

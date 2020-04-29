@@ -1,3 +1,4 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:zsy/common/utils/toast_util.dart';
 import 'package:zsy/routes/app_navigator.dart';
@@ -12,7 +13,7 @@ class SignPage extends StatefulWidget {
 }
 
 class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
-  String args;
+  ScanResult _scanResult;
 
   @override
   void initState() {
@@ -31,7 +32,8 @@ class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    args = ModalRoute.of(context).settings.arguments;
+    _scanResult = ModalRoute.of(context).settings.arguments;
+    print('_SignPageState.build : ${_scanResult.rawContent}');
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(color: Colors.black),
