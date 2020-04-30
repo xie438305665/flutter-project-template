@@ -112,13 +112,13 @@ class AppNavigator {
   static Future<bool> qrScan() async {
     final platform = MethodChannel(QR_SCAN);
     try {
-//      final bool out = await platform.invokeMethod(QR_SCAN);
-//      if (out) {
-//        debugPrint('扫描成功');
-//      }
+      final bool out = await platform.invokeMethod(QR_SCAN);
+      if (out) {
+        debugPrint('扫描成功');
+      }
     } on PlatformException catch (e) {
       debugPrint("扫描失败");
-//      print(e.toString());
+      print(e.toString());
     }
     return Future.value(false);
   }
