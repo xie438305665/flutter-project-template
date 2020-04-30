@@ -10,7 +10,6 @@ import 'routes/app_route.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('App.build');
     return MaterialApp(
       initialRoute: AppRoute.loginPage,
       routes: AppRoute.getRoutes(context),
