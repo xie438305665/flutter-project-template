@@ -85,41 +85,4 @@ class AppNavigator {
       {Object arguments}) {
     Navigator.of(context).push(route);
   }
-
-  ///返回手机桌面通信管道
-  static const String BACK_DESKTOP = "backDesktop";
-
-  ///打开二维码扫描通信管道
-  static const String QR_SCAN = "qrScan";
-
-  ///设置回退到手机桌面
-  static Future<bool> backDeskTop() async {
-    final platform = MethodChannel(BACK_DESKTOP);
-    try {
-      final bool out = await platform.invokeMethod(BACK_DESKTOP);
-      if (out) {
-//        toExit();
-        debugPrint('返回手机到桌面');
-      }
-    } on PlatformException catch (e) {
-      debugPrint("通信失败(设置回退到安卓手机桌面:设置失败)");
-      print(e.toString());
-    }
-    return Future.value(false);
-  }
-
-  ///二维码扫描
-  static Future<bool> qrScan() async {
-    final platform = MethodChannel(QR_SCAN);
-    try {
-      final bool out = await platform.invokeMethod(QR_SCAN);
-      if (out) {
-        debugPrint('扫描成功');
-      }
-    } on PlatformException catch (e) {
-      debugPrint("扫描失败");
-      print(e.toString());
-    }
-    return Future.value(false);
-  }
 }

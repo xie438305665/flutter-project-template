@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:zsy/common/utils/channel_utl.dart';
 import 'package:zsy/common/utils/toast_util.dart';
 import 'package:zsy/routes/app_navigator.dart';
 import 'package:zsy/routes/app_route.dart';
@@ -31,12 +32,12 @@ class _ScanPageState extends State<ScanPage> {
     return WillPopScope(
       onWillPop: () async {
         if (_lastPressedAt == null ||
-            DateTime.now().difference(_lastPressedAt) > Duration(seconds: 2)) {
+            DateTime.now().difference(_lastPressedAt) > Duration(seconds: 1)) {
           _lastPressedAt = DateTime.now();
           ToastUtil.show("再按一次退出");
           return false;
         }
-        AppNavigator.backDeskTop();
+        ChannelUtil.sendChannel(ChannelUtil.BACK_DESKTOP_METHOD);
         return true;
       },
       child: Scaffold(
@@ -85,7 +86,7 @@ class _ScanPageState extends State<ScanPage> {
   Future scan() async {
     if (Platform.isAndroid) {
       ///加强版扫描   基于 openCv + zxing + zbar
-      AppNavigator.qrScan();
+      ChannelUtil.sendChannel(ChannelUtil.QR_SCAN_METHOD);
       return;
     }
     try {
