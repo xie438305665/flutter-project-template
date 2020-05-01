@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -80,6 +83,11 @@ class _ScanPageState extends State<ScanPage> {
 
   ///二维码扫描 相关配置https://pub.flutter-io.cn/documentation/barcode_scan/latest/
   Future scan() async {
+    if (Platform.isAndroid) {
+      ///加强版扫描   基于 openCv + zxing + zbar
+      AppNavigator.qrScan();
+      return;
+    }
     try {
       var options = ScanOptions(
         strings: {
@@ -90,9 +98,6 @@ class _ScanPageState extends State<ScanPage> {
         restrictFormat: BarcodeFormat.values,
         useCamera: 8,
         autoEnableFlash: false,
-        android: AndroidOptions(
-          useAutoFocus: true,
-        ),
       );
       ScanResult scanResult = await BarcodeScanner.scan(options: options);
       if (scanResult.format == null ||
