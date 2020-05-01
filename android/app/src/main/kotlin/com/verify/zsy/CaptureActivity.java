@@ -195,8 +195,10 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
     public void handleDecode(Result rawResult) {
         inactivityTimer.onActivity();
         beepManager.playBeepSoundAndVibrate();
-
-        Log.d("opnecv", "已经成功");
+        Intent  intent = new Intent();
+        intent.putExtra("qrScan",rawResult.getText());
+        setResult(Activity.RESULT_OK,intent);
+        finish();
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {
