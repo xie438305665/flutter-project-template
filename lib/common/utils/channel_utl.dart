@@ -37,7 +37,6 @@ class ChannelUtil {
   static Future<bool> sendChannel(String method) async {
     final platform = MethodChannel(METHOD_CHANNEL);
     final Object arguments = await platform.invokeMethod(method);
-
     try {
       switch (method) {
         case BACK_DESKTOP_METHOD:

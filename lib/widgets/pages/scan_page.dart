@@ -25,6 +25,7 @@ class _ScanPageState extends State<ScanPage> {
   void initState() {
     super.initState();
     _scanText = "二维码扫描";
+//    ChannelUtil.getChannel(ChannelUtil.QR_SCAN_METHOD);
   }
 
   @override
