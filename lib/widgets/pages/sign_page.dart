@@ -33,7 +33,8 @@ class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
 //    _scanResult = ModalRoute.of(context).settings.arguments;
-//    print('_SignPageState.build : ${_scanResult.rawContent}');
+    print(
+        '_SignPageState.build : ${ModalRoute.of(context).settings.arguments}');
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(color: Colors.black),

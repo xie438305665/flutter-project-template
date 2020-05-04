@@ -1,0 +1,2 @@
+rootProject.name = 'barcode_scan'
+include ':library_qrscan'

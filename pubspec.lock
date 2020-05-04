@@ -25,9 +25,9 @@ packages:
   barcode_scan:
     dependency: "direct main"
     description:
-      name: barcode_scan
-      url: "https://pub.flutter-io.cn"
-    source: hosted
+      path: "plugins\\barcode_scan-3.0.0"
+      relative: true
+    source: path
     version: "3.0.0"
   boolean_selector:
     dependency: transitive

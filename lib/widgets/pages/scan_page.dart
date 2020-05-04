@@ -85,11 +85,11 @@ class _ScanPageState extends State<ScanPage> {
 
   ///二维码扫描 相关配置https://pub.flutter-io.cn/documentation/barcode_scan/latest/
   Future scan() async {
-    if (Platform.isAndroid) {
-      ///加强版扫描   基于 openCv + zxing + zbar
-      ChannelUtil.sendChannel(ChannelUtil.QR_SCAN_METHOD);
-      return;
-    }
+//    if (Platform.isAndroid) {
+//      ///加强版扫描   基于 openCv + zxing + zbar
+//      ChannelUtil.sendChannel(ChannelUtil.QR_SCAN_METHOD);
+//      return;
+//    }
     try {
       var options = ScanOptions(
         strings: {
@@ -101,7 +101,13 @@ class _ScanPageState extends State<ScanPage> {
         useCamera: 8,
         autoEnableFlash: false,
       );
+
       ScanResult scanResult = await BarcodeScanner.scan(options: options);
+      if (Platform.isAndroid) {
+        AppNavigator.toPush(context, AppRoute.signPage,
+            arguments: scanResult.rawContent);
+        return;
+      }
       if (scanResult.format == null ||
           scanResult.format == BarcodeFormat.unknown) return;
       if (scanResult.format != BarcodeFormat.qr) {

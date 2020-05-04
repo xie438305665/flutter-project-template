@@ -28,7 +28,8 @@ dependencies:
   fluttertoast: ^4.0.0
   orientation: ^1.2.0
   path_provider: ^1.6.7
-  barcode_scan: ^3.0.0
+  barcode_scan:
+    path: plugins/barcode_scan-3.0.0
   dio: ^3.0.9
   provider: ^4.0.5+1
 

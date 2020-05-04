@@ -2,9 +2,6 @@ package io.flutter.plugins;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
-
-import com.verify.zsy.channels.ZsyPlugin;
-
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.plugins.shim.ShimPluginRegistry;
 
@@ -22,6 +19,5 @@ public final class GeneratedPluginRegistrant {
     flutterEngine.getPlugins().add(new com.github.sososdk.orientation.OrientationPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.pathprovider.PathProviderPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin());
-    flutterEngine.getPlugins().add(new ZsyPlugin());
   }
 }
