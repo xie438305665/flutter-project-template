@@ -30,9 +30,6 @@ class ChannelUtil {
   //返回手机桌面 Method
   static const String BACK_DESKTOP_METHOD = "backDesktop";
 
-  //二维码扫描 Method
-  static const String QR_SCAN_METHOD = "qrScan";
-
   //Flutter 数据给原生
   static Future<bool> sendChannel(String method) async {
     final platform = MethodChannel(METHOD_CHANNEL);
@@ -45,17 +42,11 @@ class ChannelUtil {
             debugPrint('返回手机桌面');
           }
           break;
-        case QR_SCAN_METHOD:
-          debugPrint('开启扫描');
-          break;
       }
     } on PlatformException catch (e) {
       switch (method) {
         case BACK_DESKTOP_METHOD:
           debugPrint("返回手机桌面失败");
-          break;
-        case QR_SCAN_METHOD:
-          debugPrint("开启失败");
           break;
       }
     }
