@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zsy/common/utils/channel_utl.dart';
+import 'package:zsy/common/utils/channel_util.dart';
 import 'package:zsy/common/utils/toast_util.dart';
 import 'package:zsy/routes/app_navigator.dart';
 import 'package:zsy/routes/app_route.dart';
@@ -25,7 +25,6 @@ class _ScanPageState extends State<ScanPage> {
   void initState() {
     super.initState();
     _scanText = "二维码扫描";
-//    ChannelUtil.getChannel(ChannelUtil.QR_SCAN_METHOD);
   }
 
   @override
@@ -85,11 +84,6 @@ class _ScanPageState extends State<ScanPage> {
 
   ///二维码扫描 相关配置https://pub.flutter-io.cn/documentation/barcode_scan/latest/
   Future scan() async {
-//    if (Platform.isAndroid) {
-//      ///加强版扫描   基于 openCv + zxing + zbar
-//      ChannelUtil.sendChannel(ChannelUtil.QR_SCAN_METHOD);
-//      return;
-//    }
     try {
       var options = ScanOptions(
         strings: {

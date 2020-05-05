@@ -30,7 +30,7 @@ class ChannelUtil {
   //返回手机桌面 Method
   static const String BACK_DESKTOP_METHOD = "backDesktop";
 
-  //Flutter 数据给原生
+  ///Flutter 数据给原生
   static Future<bool> sendChannel(String method) async {
     final platform = MethodChannel(METHOD_CHANNEL);
     final Object arguments = await platform.invokeMethod(method);
@@ -53,7 +53,7 @@ class ChannelUtil {
     return Future.value(false);
   }
 
-  //Flutter 接收原生数据
+  ///Flutter 接收原生数据
   static Future<bool> getChannel(String method) async {
     final platform = EventChannel(EVENT_CHANNEL);
     platform

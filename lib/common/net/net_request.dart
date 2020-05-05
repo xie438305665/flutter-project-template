@@ -8,6 +8,7 @@ import 'package:zsy/common/global/global_provider.dart';
 import 'package:zsy/common/net/net_url.dart';
 import 'package:zsy/common/utils/sp_util.dart';
 import 'package:zsy/common/utils/text_util.dart';
+import 'package:zsy/entitys/user_entity.dart';
 
 import '../../constant.dart';
 
@@ -22,9 +23,11 @@ class NetRequest {
   BuildContext context;
   Options _options;
 
+  //创建dio
   static Dio dio =
       new Dio(BaseOptions(connectTimeout: 5000, receiveTimeout: 5000));
 
+  ///初始化 dio
   static void init() {
     dio.options.baseUrl = GlobalProvider.isRelease
         ? NetUrl.BASE_RELEASE_URL

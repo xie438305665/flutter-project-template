@@ -8,6 +8,7 @@ import 'package:zsy/generated/json/user_entity_helper.dart';
 import 'package:zsy/common/global/global_config.dart';
 import 'package:zsy/generated/json/global_config_entity_helper.dart';
 
+///json操作类
 class JsonConvert<T> {
   T fromJson(Map<String, dynamic> json) {
     return _getFromJson<T>(runtimeType, this, json);
@@ -29,7 +30,7 @@ class JsonConvert<T> {
       case UserObjectUser:
         return userObjectUserFromJson(data as UserObjectUser, json) as T;
       case GlobalConfig:
-        return globalConfigEntityFromJson(data as GlobalConfig, json) as T;
+        return globalConfigFromJson(data as GlobalConfig, json) as T;
     }
     return data as T;
   }
@@ -45,7 +46,7 @@ class JsonConvert<T> {
       case UserObjectUser:
         return userObjectUserToJson(data as UserObjectUser);
       case GlobalConfig:
-        return globalConfigEntityToJson(data as GlobalConfig);
+        return globalConfigToJson(data as GlobalConfig);
     }
     return data as T;
   }

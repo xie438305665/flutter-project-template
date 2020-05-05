@@ -16,7 +16,7 @@ class GlobalProvider {
   // 配置相关类
   static GlobalConfig globalConfig = GlobalConfig();
 
-  //初始化
+  ///初始化
   static Future init() async {
     var configValue = SpUtil.getString(Constant.SP_CONFIG_KEY, "");
     if (TextUtil.isStringNull(configValue)) {
@@ -31,12 +31,13 @@ class GlobalProvider {
     NetRequest.init();
   }
 
-  // 更新GlobalConfig类
+  /// 更新GlobalConfig类
   static updateConfig(GlobalConfig config) {
     if (config == null) return;
     SpUtil.putString(Constant.SP_CONFIG_KEY, jsonEncode(config));
   }
 
+  ///释放
   static clear() {
     globalConfig = null;
     SpUtil.clear();
