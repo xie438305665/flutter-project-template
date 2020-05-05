@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:orientation/orientation.dart';
+import 'package:zsy/common/global/global_provider.dart';
 
 import 'routes/app_route.dart';
 
@@ -11,7 +12,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: AppRoute.loginPage,
+      initialRoute: AppRoute.LOGIN_PAGEl,
       routes: AppRoute.getRoutes(context),
       navigatorObservers: [NavigatorObserverListener()],
     );
@@ -26,7 +27,7 @@ class NavigatorObserverListener extends NavigatorObserver {
   void didPush(Route route, Route previousRoute) {
     super.didPush(route, previousRoute);
     map[route.settings.name] = route;
-    if (previousRoute != null && route.settings.name == AppRoute.canvasPage) {
+    if (previousRoute != null && route.settings.name == AppRoute.CANVAS_PAGE) {
       OrientationPlugin.forceOrientation(DeviceOrientation.landscapeLeft);
     }
   }
@@ -36,10 +37,10 @@ class NavigatorObserverListener extends NavigatorObserver {
     super.didPop(route, previousRoute);
     map.remove(route.settings.name);
     if (previousRoute != null &&
-        previousRoute.settings.name == AppRoute.signPage) {
+        previousRoute.settings.name == AppRoute.SIGN_PAGE) {
       OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
     }
   }
 }
 
-void main() => (runApp(new App()));
+void main() => GlobalProvider.init().then((e) => runApp(new App()));

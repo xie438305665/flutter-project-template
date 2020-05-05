@@ -25,74 +25,74 @@ class SpUtil {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  putString(String key, String value) async {
+  static putString(String key, String value) async {
     if (sharedPreferences == null) {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     sharedPreferences.setString(key, value);
   }
 
-  putInt(String key, int value) async {
+  static putInt(String key, int value) async {
     if (sharedPreferences == null) {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     sharedPreferences.setInt(key, value);
   }
 
-  putDouble(String key, double value) async {
+  static putDouble(String key, double value) async {
     if (sharedPreferences == null) {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     sharedPreferences.setDouble(key, value);
   }
 
-  putBool(String key, bool value) async {
+  static putBool(String key, bool value) async {
     if (sharedPreferences == null) {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     sharedPreferences.setBool(key, value);
   }
 
-  putStringList(String key, List<String> value) async {
+  static putStringList(String key, List<String> value) async {
     if (sharedPreferences == null) {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     sharedPreferences.setStringList(key, value);
   }
 
-  getString(String key, String defaultValue) {
+  static getString(String key, String defaultValue) {
     if (sharedPreferences == null) return defaultValue;
     sharedPreferences.getString(key);
   }
 
-  getInt(String key, int defaultValue) {
+  static getInt(String key, int defaultValue) {
     if (sharedPreferences == null) return defaultValue;
     sharedPreferences.getInt(key);
   }
 
-  getDouble(String key, double defaultValue) {
+  static getDouble(String key, double defaultValue) {
     if (sharedPreferences == null) return defaultValue;
     sharedPreferences.getDouble(key);
   }
 
-  getBool(String key, bool defaultValue) {
+  static getBool(String key, bool defaultValue) {
     if (sharedPreferences == null) return defaultValue;
     sharedPreferences.getBool(key);
   }
 
-  getStringList(String key, List<String> defaultValue) {
+  static getStringList(String key, List<String> defaultValue) {
     if (sharedPreferences == null) return defaultValue;
     sharedPreferences.getStringList(key);
   }
 
-  bool isContainsKey(String key) => sharedPreferences.containsKey(key);
+  static bool isContainsKey(String key) => sharedPreferences.containsKey(key);
 
-  removeValue(String key) {
+  static removeValue(String key) {
     if (sharedPreferences == null) return;
     sharedPreferences.remove(key);
   }
 
-  clear() {
+  static clear() {
     if (sharedPreferences == null) return;
     sharedPreferences.clear();
   }

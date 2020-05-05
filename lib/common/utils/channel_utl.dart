@@ -21,19 +21,19 @@ class ChannelUtil {
     return _channelUtil;
   }
 
-  ///通信管道 (Flutter发送 原生)
+  //通信管道 (Flutter发送 原生)
   static const String METHOD_CHANNEL = "method.com.verify.zsy";
 
-  ///通信管道(原生 发送 Flutter)
+  //通信管道(原生 发送 Flutter)
   static const String EVENT_CHANNEL = "event.com.verify.zsy";
 
-  ///返回手机桌面 Method
+  //返回手机桌面 Method
   static const String BACK_DESKTOP_METHOD = "backDesktop";
 
-  ///二维码扫描 Method
+  //二维码扫描 Method
   static const String QR_SCAN_METHOD = "qrScan";
 
-  ///Flutter 数据给原生
+  //Flutter 数据给原生
   static Future<bool> sendChannel(String method) async {
     final platform = MethodChannel(METHOD_CHANNEL);
     final Object arguments = await platform.invokeMethod(method);
@@ -62,7 +62,7 @@ class ChannelUtil {
     return Future.value(false);
   }
 
-  ///Flutter 接收原生数据
+  //Flutter 接收原生数据
   static Future<bool> getChannel(String method) async {
     final platform = EventChannel(EVENT_CHANNEL);
     platform
@@ -71,19 +71,5 @@ class ChannelUtil {
     return Future.value(false);
   }
 
-  static void _onListenData(Object event, String method) {
-    try {
-      switch (method) {
-        case QR_SCAN_METHOD:
-          debugPrint('扫描成功');
-          break;
-      }
-    } on PlatformException catch (e) {
-      switch (method) {
-        case QR_SCAN_METHOD:
-          debugPrint("扫描失败");
-          break;
-      }
-    }
-  }
+  static void _onListenData(Object event, String method) {}
 }

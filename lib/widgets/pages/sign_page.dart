@@ -103,7 +103,7 @@ class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
             onTap: () async => {
               AppNavigator.toPush(
                 context,
-                AppRoute.canvasPage,
+                AppRoute.CANVAS_PAGE,
               )
             },
           ),

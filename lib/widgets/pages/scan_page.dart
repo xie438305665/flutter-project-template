@@ -104,7 +104,7 @@ class _ScanPageState extends State<ScanPage> {
 
       ScanResult scanResult = await BarcodeScanner.scan(options: options);
       if (Platform.isAndroid) {
-        AppNavigator.toPush(context, AppRoute.signPage,
+        AppNavigator.toPush(context, AppRoute.SIGN_PAGE,
             arguments: scanResult.rawContent);
         return;
       }
@@ -113,7 +113,7 @@ class _ScanPageState extends State<ScanPage> {
       if (scanResult.format != BarcodeFormat.qr) {
         ToastUtil.show("二维码不规范，无法识别");
       } else {
-        AppNavigator.toPush(context, AppRoute.signPage, arguments: scanResult);
+        AppNavigator.toPush(context, AppRoute.SIGN_PAGE, arguments: scanResult);
       }
     } on PlatformException catch (e) {
       var result = ScanResult(

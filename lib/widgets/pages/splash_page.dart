@@ -15,7 +15,7 @@ class SplashState extends State {
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 1), () {
-      AppNavigator.toPushReplacementNamed(context, AppRoute.loginPage);
+      AppNavigator.toPushReplacementNamed(context, AppRoute.LOGIN_PAGEl);
     });
   }
 
