@@ -3,4 +3,5 @@ import 'package:zsy/generated/json/base/json_convert_content.dart';
 
 class GlobalConfig with JsonConvert<GlobalConfig> {
   UserEntity userEntity;
+  String token;
 }

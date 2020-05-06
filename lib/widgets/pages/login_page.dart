@@ -4,7 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:zsy/common/net/net_request.dart';
 import 'package:zsy/common/notifiers/user_notifier.dart';
+import 'package:zsy/common/utils/crypto_util.dart';
+import 'package:zsy/common/utils/text_util.dart';
 import 'package:zsy/entitys/user_entity.dart';
 import 'package:zsy/routes/app_navigator.dart';
 import 'package:zsy/routes/app_route.dart';
@@ -21,14 +24,14 @@ class _LoginPageState extends State<LoginPage> {
   String _userName;
   String _password;
 
-  bool _isSuccess;
+  String _msg;
 
   UserEntity _userEntity;
 
   @override
   void initState() {
     super.initState();
-    _isSuccess = true;
+    _msg = "";
   }
 
   @override
@@ -80,10 +83,11 @@ class _LoginPageState extends State<LoginPage> {
                                                               .length)))),
                                       onChanged: (text) {
                                         this.setState(() {
-                                          _userName = text;
+                                          this._userName = text;
+                                          this._msg = "";
                                         });
                                       },
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.done,
                                     ),
                                     TextField(
@@ -111,17 +115,19 @@ class _LoginPageState extends State<LoginPage> {
                                       onChanged: (text) {
                                         this.setState(() {
                                           this._password = text;
+                                          this._msg = "";
                                         });
                                       },
-                                      keyboardType: TextInputType.number,
+                                      keyboardType:
+                                          TextInputType.visiblePassword,
                                       textInputAction: TextInputAction.done,
                                     ),
                                     Offstage(
-                                        offstage: _isSuccess,
+                                        offstage: TextUtil.isStringNull(_msg),
                                         child: Container(
                                           margin: EdgeInsets.only(left: 30),
                                           child: Text(
-                                            '帐号密码错误',
+                                            _msg,
                                             style: TextStyle(color: Colors.red),
                                           ),
                                         )),
@@ -143,13 +149,26 @@ class _LoginPageState extends State<LoginPage> {
                             "登录",
                             style: TextStyle(fontSize: 20),
                           ),
-                          onPressed: () async =>
-                              AppNavigator.toPushReplacementNamed(
-                                  context, AppRoute.SCAN_PAGE)
-//                          setState(() {
-//                            _isSuccess = false;
-//                          })
-                          ),
+                          onPressed: () async => {
+                                NetRequest(context)
+                                    .login(
+                                        this._userName,
+                                        CryptoUtil.cryptoPassword(
+                                            this._password))
+                                    .then((userEntity) {
+                                  if (userEntity.success != 1) {
+                                    setState(() {
+                                      _msg = userEntity.message;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _msg = "";
+                                    });
+                                    AppNavigator.toPushReplacementNamed(
+                                        context, AppRoute.SCAN_PAGE);
+                                  }
+                                })
+                              }),
                     )
                   ],
                 ),
