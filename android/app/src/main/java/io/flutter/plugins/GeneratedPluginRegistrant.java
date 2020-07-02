@@ -14,9 +14,11 @@ import io.flutter.embedding.engine.plugins.shim.ShimPluginRegistry;
 public final class GeneratedPluginRegistrant {
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
     ShimPluginRegistry shimPluginRegistry = new ShimPluginRegistry(flutterEngine);
-    flutterEngine.getPlugins().add(new de.mintware.barcode_scan.BarcodeScanPlugin());
+    flutterEngine.getPlugins().add(new com.flutter.flutter_app_upgrade.FlutterAppUpgradePlugin());
+      com.flutter.keyboardvisibility.KeyboardVisibilityPlugin.registerWith(shimPluginRegistry.registrarFor("com.flutter.keyboardvisibility.KeyboardVisibilityPlugin"));
       io.github.ponnamkarthik.toast.fluttertoast.FluttertoastPlugin.registerWith(shimPluginRegistry.registrarFor("io.github.ponnamkarthik.toast.fluttertoast.FluttertoastPlugin"));
     flutterEngine.getPlugins().add(new com.github.sososdk.orientation.OrientationPlugin());
+    flutterEngine.getPlugins().add(new io.flutter.plugins.packageinfo.PackageInfoPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.pathprovider.PathProviderPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin());
   }

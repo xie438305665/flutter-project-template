@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zsy/routes/app_navigator.dart';
+import 'package:flutter_project/routes/app_navigator.dart';
 
 /// @description: Flutter 渠道通信
 /// @author xcl qq:244672784

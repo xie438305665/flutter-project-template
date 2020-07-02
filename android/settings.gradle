@@ -1,4 +1,4 @@
-include ':app', ':library_qrscan'
+include ':app'
 
 def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
 

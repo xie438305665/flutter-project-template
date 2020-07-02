@@ -1,5 +1,5 @@
-name: zsy
-description: A new Flutter application.
+name: flutter_project
+description: flutter 项目模板
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -32,9 +32,6 @@ dependencies:
   orientation: ^1.2.0
   #文件读取
   path_provider: ^1.6.7
-  #扫描二维码
-  barcode_scan:
-    path: plugins/barcode_scan-3.0.0
   #网络请求
   dio: ^3.0.9
   #全局状态共享
@@ -43,6 +40,12 @@ dependencies:
   crypto: ^2.1.3
   #加载UI
   loading: ^1.0.2
+  #app 应用信息
+  package_info: ^0.4.0+18
+  #软键盘监听
+  flutter_keyboard_visibility: ^2.0.0
+  #App检测版本升级
+  flutter_app_upgrade: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -61,17 +64,18 @@ flutter:
   uses-material-design: true
   assets:
     - images/ic_ims_log.png
-    - images/ic_splash.jpg
-    - images/2.0x/ic_2x_login_bg.png
-    - images/2.0x/ic_2x_login_user.png
-    - images/2.0x/ic_2x_login_password.png
-    - images/2.0x/ic_2x_qr_code_log.png
-    - images/2.0x/ic_2x_warning.png
-    - images/3.0x/ic_3x_login_bg.png
-    - images/3.0x/ic_3x_login_user.png
-    - images/3.0x/ic_3x_login_password.png
-    - images/3.0x/ic_3x_qr_code_log.png
-    - images/3.0x/ic_3x_warning.png
+    - images/ic_login_bg.png
+    - images/ic_login_user.png
+    - images/ic_login_password.png
+    - images/ic_qr_code_log.png
+    - images/ic_warning.png
+    - images/ic_checked.png
+    - images/ic_net_empty.png
+    - images/ic_net_error.png
+    - images/ic_scan_bg.png
+    - images/ic_avatar_max.png
+    - images/ic_avatar_min.png
+    - images/ic_success.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -1,40 +1,78 @@
-//import 'package:barcode_scan/barcode_scan.dart';
+import 'dart:io';
+import 'dart:ui';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:zsy/common/utils/toast_util.dart';
-import 'package:zsy/routes/app_navigator.dart';
-import 'package:zsy/routes/app_route.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_project/common/image_file.dart';
+import 'package:flutter_project/common/net/net_request.dart';
+import 'package:flutter_project/common/res/res_colors.dart';
+import 'package:flutter_project/common/utils/text_util.dart';
+import 'package:flutter_project/common/utils/toast_util.dart';
+import 'package:flutter_project/entity/raw_content_entity.dart';
+import 'package:flutter_project/entity/sign_entity.dart';
+import 'package:flutter_project/routes/app_navigator.dart';
+import 'package:flutter_project/routes/app_route.dart';
+import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
+import 'package:loading/loading.dart';
 
 ///@description:签名
 ///@author xcl qq:244672784
 ///@Date 2020/4/27 15:15
 class SignPage extends StatefulWidget {
+  final arguments;
+
+  SignPage({this.arguments});
+
   @override
-  _SignPageState createState() => _SignPageState();
+  _SignPageState createState() => _SignPageState(arguments: this.arguments);
 }
 
-class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
-//  ScanResult _scanResult;
+class _SignPageState extends State<SignPage> {
+  RawContentEntity arguments;
+  SignEntity _signEntity;
+  SignData _signData;
+  Map<String, SignDataClass> _clazzMap;
+  Map<String, SignDataClass> _signMap;
+
+  bool _isAllChecked = false;
+  bool _isShowLoading = true;
+  bool _isShowNetStatus = false;
+  bool _isNetEmpty = true;
+
+  String _signPath = "";
+
+  _SignPageState({this.arguments});
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    _clazzMap = Map();
+    _signMap = Map();
+    try {
+      if (TextUtil.isObjectNull(arguments)) {
+        ToastUtil.show("非法扫描，不能识别的二维码");
+        setState(() {
+          _isShowNetStatus = true;
+          _isNetEmpty = true;
+          _isShowLoading = false;
+        });
+        return;
+      }
+      _getProductDetail(arguments.type, arguments.id, false);
+    } catch (e) {
+      ToastUtil.show("非法扫描，不能识别的二维码");
+      setState(() {
+        _isShowNetStatus = true;
+        _isShowLoading = false;
+        _isNetEmpty = true;
+      });
+    }
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {}
 
   @override
   Widget build(BuildContext context) {
-//    _scanResult = ModalRoute.of(context).settings.arguments;
-    print(
-        '_SignPageState.build : ${ModalRoute.of(context).settings.arguments}');
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(color: Colors.black),
@@ -46,84 +84,367 @@ class _SignPageState extends State<SignPage> with WidgetsBindingObserver {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          WarningWidget(),
-          ContentWidget("考试名称：", "直接展示学管端的产品1111111111111111列表的名称列表的名称"),
-          ContentWidget("类型：", "考试类产品"),
-          LineWidget(),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: 5),
-                  color: Colors.green,
-                  width: 1,
-                  height: 18,
-                ),
-                Expanded(child: Text("选择班级和产品")),
-                GestureDetector(
-                  child: Text(
-                    "全选",
-                    style: TextStyle(color: Colors.green),
-                  ),
-                  onTap: () => ToastUtil.show("全选"),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Padding(
-                padding: EdgeInsets.all(10),
-                child: GridView(
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                  ),
-                  children: _gridList(),
-                )),
-          ),
-          LineWidget(),
-          GestureDetector(
-            child: Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.all(10),
-              width: double.infinity,
-              height: 200,
-              color: Colors.grey,
-              child: Text(
-                "点击签名",
-                style: TextStyle(color: Colors.green),
+      body: RefreshIndicator(
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              ListView(
+                children: TextUtil.isObjectNull(_signEntity)
+                    ? <Widget>[]
+                    : <Widget>[
+                        WarningWidget(),
+                        ContentWidget(
+                            "名称：",
+                            TextUtil.isObjectNull(this._signEntity)
+                                ? ""
+                                : this._signEntity.data.name),
+                        ContentWidget(
+                            "类型：",
+                            TextUtil.isObjectNull(this._signEntity)
+                                ? ""
+                                : TextUtil.isStringNull(
+                                        this._signEntity.data.typeName)
+                                    ? ""
+                                    : this._signEntity.data.typeName),
+                        LineWidget(),
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(right: 5),
+                                color: ResColors.greenColor,
+                                width: 1,
+                                height: 18,
+                              ),
+                              Expanded(child: Text("选择班级和产品")),
+                              GestureDetector(
+                                child: Text(
+                                  !_isAllChecked ? "全选" : "取消全选",
+                                  style: TextStyle(color: ResColors.greenColor),
+                                ),
+                                onTap: () {
+                                  if (_isAllChecked) {
+                                    if (_clazzMap.isNotEmpty) {
+                                      _clazzMap.clear();
+                                      setState(() {
+                                        _clazzMap = _clazzMap;
+                                        _isAllChecked = false;
+                                      });
+                                    }
+                                    return;
+                                  }
+                                  if (!TextUtil.isListEmpty(
+                                      this._signEntity.data.classes)) {
+                                    this
+                                        ._signEntity
+                                        .data
+                                        .classes
+                                        .forEach((v) => {
+                                              if (v.isSigned != 1)
+                                                {
+                                                  _isAllChecked = true,
+                                                  _clazzMap[v.classId +
+                                                      "${v.productType}"] = v
+                                                }
+                                            });
+                                    setState(() {
+                                      _clazzMap = _clazzMap;
+                                      _isAllChecked = _isAllChecked;
+                                    });
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: GridView(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 10,
+                                    childAspectRatio: 2.8),
+                            children: TextUtil.isObjectNull(this._signEntity) ||
+                                    TextUtil.isListEmpty(
+                                        this._signEntity.data.classes)
+                                ? <Widget>[]
+                                : this._signEntity.data.classes.map((item) {
+                                    String key =
+                                        "${item.classId}${item.productType}";
+                                    return Stack(
+                                      children: <Widget>[
+                                        Container(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          child: RaisedButton(
+                                              color: !TextUtil.isObjectNull(
+                                                      _signMap[key])
+                                                  ? Colors.grey.shade300
+                                                  : !TextUtil.isObjectNull(
+                                                          _clazzMap[key])
+                                                      ? ResColors.greenColor
+                                                      : Colors.white,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Text(
+                                                    item.productName,
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                      color: !TextUtil
+                                                              .isObjectNull(
+                                                                  _clazzMap[
+                                                                      key])
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    item.className,
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                      color: !TextUtil
+                                                              .isObjectNull(
+                                                                  _clazzMap[
+                                                                      key])
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              onPressed: () {
+                                                if (!TextUtil.isObjectNull(
+                                                    _signMap[key])) return;
+                                                if (TextUtil.isObjectNull(
+                                                    _clazzMap[key])) {
+                                                  _clazzMap[key] = item;
+                                                } else {
+                                                  _clazzMap.remove(key);
+                                                }
+                                                setState(() {
+                                                  _clazzMap = _clazzMap;
+                                                });
+                                              }),
+                                        ),
+                                        Align(
+                                          child: Offstage(
+                                            child: Image(
+                                              image: AssetImage(
+                                                  "images/ic_checked.png"),
+                                            ),
+                                            offstage: TextUtil.isObjectNull(
+                                                _clazzMap[key]),
+                                          ),
+                                          alignment: Alignment.bottomRight,
+                                        )
+                                      ],
+                                    );
+                                  }).toList(),
+                          ),
+                        ),
+                        LineWidget(),
+                        GestureDetector(
+                          child: Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.all(10),
+                              width: double.infinity,
+                              height: 200,
+                              color: Colors.white,
+                              child: TextUtil.isStringNull(_signPath)
+                                  ? Text("点击签名")
+                                  : Image(image: ImageFile(File(_signPath)))),
+                          onTap: () {
+                            _signData = SignData();
+                            _signData.classes = _clazzMap.values.toList();
+                            _signData.name = this._signEntity.data.name;
+                            AppNavigator.toPushThen(
+                                    context, AppRoute.CANVAS_PAGE,
+                                    arguments: _signData)
+                                .then((value) {
+                              debugPrint(value);
+                              setState(() {
+                                _signPath = value;
+                              });
+                            });
+                          },
+                        ),
+                        Container(
+                          height: 50,
+                          margin: EdgeInsets.all(20),
+                          width: double.infinity,
+                          child: RaisedButton(
+                              elevation: 2.0,
+                              color: TextUtil.isStringNull(_signPath)
+                                  ? Colors.grey.shade300
+                                  : ResColors.greenColor,
+                              textColor: Colors.white,
+                              child: Text(
+                                "确认上传",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              onPressed: () {
+                                _saveSignData(
+                                    _signEntity.data.name,
+                                    arguments.id,
+                                    _signEntity.data.grade,
+                                    _clazzMap,
+                                    _signPath);
+                              }),
+                        ),
+                      ],
               ),
-            ),
-            onTap: () async => {
-              AppNavigator.toPush(
-                context,
-                AppRoute.CANVAS_PAGE,
-              )
-            },
+              Offstage(
+                  offstage: !_isShowLoading,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    color: Colors.white,
+                    alignment: Alignment.center,
+                    child: Loading(
+                      color: Colors.black38,
+                      indicator: BallSpinFadeLoaderIndicator(),
+                    ),
+                  )),
+              Offstage(
+                  offstage: !_isShowNetStatus,
+                  child: GestureDetector(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Image(
+                              image: AssetImage(_isNetEmpty
+                                  ? "images/ic_net_empty.png"
+                                  : "images/ic_net_error.png")),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            _isNetEmpty ? "暂无数据,请返回重新操作" : "网络请求失败，请返回重新操作",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          )
+                        ],
+                      ),
+                      onTap: () {
+                        _getProductDetail(arguments.type,
+                            arguments.id, false);
+                      })),
+            ],
           ),
-          Container(
-            height: 50,
-            margin: EdgeInsets.all(20),
-            width: double.infinity,
-            child: RaisedButton(
-                elevation: 2.0,
-                color: Colors.green,
-                textColor: Colors.white,
-                child: Text(
-                  "确认上传",
-                  style: TextStyle(fontSize: 20),
-                ),
-                onPressed: () async => ToastUtil.show("上传")),
-          ),
-        ],
-      ),
+          onRefresh: () async {
+            Future.delayed(Duration(seconds: 5), () {
+              return _getProductDetail(
+                  arguments.type, arguments.id, true);
+            });
+          }),
     );
+  }
+
+  ///获取产品信息
+  _getProductDetail(String type, String id, bool isRefresh) async {
+    if (TextUtil.isStringNull(type) || TextUtil.isStringNull(id)) {
+      ToastUtil.show("参数不能为空");
+      return null;
+    }
+    setState(() {
+      _isShowLoading = isRefresh ? false : true;
+      _isShowNetStatus = false;
+    });
+    SignEntity signEntity = await NetRequest.getProductDetail(type, id);
+    if (TextUtil.isObjectNull(signEntity)) {
+      ToastUtil.show("网络异常,请求失败");
+      setState(() {
+        _isNetEmpty = false;
+        _isShowLoading = false;
+        _isShowNetStatus = isRefresh ? false : true;
+      });
+      return;
+    }
+    if (signEntity.success != 1) {
+      setState(() {
+        _isNetEmpty = true;
+        _isShowLoading = false;
+        _isShowNetStatus = isRefresh ? false : true;
+      });
+      ToastUtil.show(signEntity.message);
+      return;
+    }
+    //默认选中班级
+    var signData = signEntity.data;
+    if (!TextUtil.isObjectNull(signData) &&
+        !TextUtil.isListEmpty(signData.classes)) {
+      signData.classes.forEach((v) =>
+      {
+        if( arguments.classId == v.classId && v.isSigned == 0){
+          _clazzMap["${v.classId}${v.productType}"] = v
+        },
+        if(v.isSigned == 1){
+          _signMap["${v.classId}${v.productType}"] = v
+        }
+      });
+    }
+    setState(() {
+      _signEntity = signEntity;
+      _isShowLoading = false;
+      _isShowNetStatus = false;
+    });
+  }
+
+  ///保存签名信息
+  _saveSignData(String name, String id, String grade,
+      Map<String, SignDataClass> clazzMap, String signPath) async {
+    if (TextUtil.isStringNull(_signPath)) {
+      ToastUtil.show("缺少产品/考试名称");
+      return;
+    }
+    if (TextUtil.isStringNull(arguments.id)) {
+      ToastUtil.show("缺少Id");
+      return;
+    }
+    if (TextUtil.isStringNull(_signPath)) {
+      ToastUtil.show("缺少年级");
+      return;
+    }
+    if (_clazzMap == null || _clazzMap.length <= 0) {
+      ToastUtil.show("缺少班级");
+      return;
+    }
+    if (TextUtil.isStringNull(_signPath)) {
+      ToastUtil.show("缺少签名文件");
+      return;
+    }
+    setState(() {
+      _isShowLoading = true;
+    });
+    List<SignDataClass> cls = _clazzMap.values.toList();
+    Response response =
+    await NetRequest.saveSignData(name, id, grade, cls, signPath);
+    if (response == null) {
+      ToastUtil.show("上传失败");
+      setState(() {
+        _isShowLoading = false;
+      });
+    }
+    if (response.data["success"] != 1) {
+      ToastUtil.show(response.data["message"]);
+      setState(() {
+        _isShowLoading = false;
+      });
+      return;
+    }
+    ToastUtil.show("上传成功");
+    setState(() {
+      _isShowLoading = false;
+    });
+    AppNavigator.toPush(context, AppRoute.SIGN_SUCCESS_PAGE, arguments: cls);
   }
 }
 
@@ -137,8 +458,8 @@ class WarningWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Image.asset(
-            "images/2.0x/ic_2x_warning.png",
+          Image(
+            image: AssetImage("images/ic_warning.png"),
             width: 14,
             height: 14,
           ),
@@ -189,26 +510,4 @@ class LineWidget extends StatelessWidget {
       color: Colors.grey,
     );
   }
-}
-
-List<Widget> _gridList() {
-  List<Widget> list = [];
-  list.add(Stack(
-    children: <Widget>[
-      SizedBox(
-        width: double.infinity,
-        height: 50,
-        child: RaisedButton(
-          color: Colors.green,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[Text("三步金冠提分宝"), Text("高一(1班)")],
-          ),
-          onPressed: () => {ToastUtil.show("11111")},
-        ),
-      )
-    ],
-  ));
-  return list;
 }

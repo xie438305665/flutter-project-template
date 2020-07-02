@@ -1,5 +1,5 @@
-import 'package:zsy/common/notifiers/base_notiier.dart';
-import 'package:zsy/entitys/user_entity.dart';
+import 'package:flutter_project/common/notifiers/base_notiier.dart';
+import 'package:flutter_project/entity/user_entity.dart';
 
 /// @description: 用户信息变更 通知类
 /// @author xcl qq:244672784

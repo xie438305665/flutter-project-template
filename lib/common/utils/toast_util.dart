@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+/// @description: toast类
+/// @author xcl qq:244672784
+/// @Date 2020/5/5 12:57
 class ToastUtil {
   ToastUtil._internal();
 

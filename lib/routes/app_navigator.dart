@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zsy/common/utils/toast_util.dart';
 
 /// @description:导航类
 /// @author xcl qq:244672784
@@ -29,14 +28,10 @@ class AppNavigator {
   }
 
   ///界面跳转带返回值
-  static void toPushThen(
-      BuildContext context, String routeName, FutureOr futureOr,
-      {Object arguments}) {
-    Navigator.of(context)
-        .pushNamed(routeName, arguments: arguments)
-        .then(futureOr, onError: () {
-      ToastUtil.show("返回异常");
-    });
+  static Future<Object> toPushThen(BuildContext context, String routeName,
+      {Object arguments}) async {
+    return await Navigator.of(context)
+        .pushNamed(routeName, arguments: arguments);
   }
 
   ///返回上一个界面
@@ -57,16 +52,11 @@ class AppNavigator {
   }
 
   ///从routeName -> withName 界面    中间界面全部销毁   带返回值
-  static void toPushNameAndRemoveUtilThen(
-      BuildContext context,
-      String newRouteName,
-      FutureOr futureOr,
-      Function function,
-      RoutePredicate predicate,
-      {Object arguments}) {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(newRouteName, predicate)
-        .then(futureOr, onError: function);
+  static Future<Object> toPushNameAndRemoveUtilThen(
+      BuildContext context, String newRouteName, RoutePredicate predicate,
+      {Object arguments}) async {
+    return await Navigator.of(context)
+        .pushNamedAndRemoveUntil(newRouteName, predicate, arguments: arguments);
   }
 
   ///跳转到routeName 界面  当前界面销毁
@@ -75,14 +65,27 @@ class AppNavigator {
     Navigator.of(context).pushReplacementNamed(routeName, arguments: arguments);
   }
 
+  ///一直退出直到routeName界面
+  static void toPopUntil(BuildContext context, String routeName) {
+    Navigator.of(context).popUntil(ModalRoute.withName(routeName));
+  }
+
+  ///当前界面退出，跳到指定routeName
+  static void toPopAndPushNamed(BuildContext context, String routeName,
+      {Object arguments}) {
+    Navigator.of(context).popAndPushNamed(routeName, arguments: arguments);
+  }
+
+  ///当前界面退出，跳到指定routeName 带返回值
+  static Future<Object> toPopAndPushNamedThen(
+      BuildContext context, String routeName, RoutePredicate predicate,
+      {Object arguments}) async {
+    return await Navigator.of(context)
+        .popAndPushNamed(routeName, arguments: arguments);
+  }
+
   ///退出APP
   static void toExit() {
     SystemNavigator.pop();
-  }
-
-  static void onNavigatorRoute(
-      BuildContext context, String routeName, Route route,
-      {Object arguments}) {
-    Navigator.of(context).push(route);
   }
 }

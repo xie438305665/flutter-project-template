@@ -47,7 +47,7 @@ class CryptoUtil {
     return utf8.decode(object);
   }
 
-  //登录密码 加密
+  ///登录密码 加密
   static String cryptoPassword(String password) {
     if (TextUtil.isStringNull(password)) return "";
     return valueToMd5(valueToSha1(password));

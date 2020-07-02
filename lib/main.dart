@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:orientation/orientation.dart';
-import 'package:zsy/common/global/global_provider.dart';
+import 'package:flutter_project/common/global/global_provider.dart';
+import 'package:flutter_project/common/utils/global_config_util.dart';
+import 'package:flutter_project/routes/app_route.dart';
+import 'package:flutter_project/widgets/pages/login_page.dart';
+import 'package:flutter_project/widgets/pages/scan_page.dart';
 
-import 'routes/app_route.dart';
+import 'common/utils/text_util.dart';
 
-/// @description: 入口
+///程序入口
+void main() => {runApp(App()), GlobalProvider.init()};
+
 /// @author xcl qq:244672784
-/// @Date 2020/4/25 10:42
-class App extends StatelessWidget {
+/// @Date 2020/4/25
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  bool isLog = true;
+
+  @override
+  void initState() {
+    GlobalConfigUtil.getGlobalConfig().then((value) => {
+          setState(() {
+            isLog = TextUtil.isStringNull(value.token);
+          })
+        });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: AppRoute.LOGIN_PAGEl,
-      routes: AppRoute.getRoutes(context),
+      home: isLog ? LoginPage() : ScanPage(arguments: false,),
+      onGenerateRoute: AppRoute.onGenerateRoute,
       navigatorObservers: [NavigatorObserverListener()],
     );
   }
@@ -21,26 +42,13 @@ class App extends StatelessWidget {
 
 /// Navigator 监听
 class NavigatorObserverListener extends NavigatorObserver {
-  Map<String, Route> map = Map();
-
   @override
   void didPush(Route route, Route previousRoute) {
     super.didPush(route, previousRoute);
-    map[route.settings.name] = route;
-    if (previousRoute != null && route.settings.name == AppRoute.CANVAS_PAGE) {
-      OrientationPlugin.forceOrientation(DeviceOrientation.landscapeLeft);
-    }
   }
 
   @override
   void didPop(Route route, Route previousRoute) {
     super.didPop(route, previousRoute);
-    map.remove(route.settings.name);
-    if (previousRoute != null &&
-        previousRoute.settings.name == AppRoute.SIGN_PAGE) {
-      OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
-    }
   }
 }
-
-void main() => GlobalProvider.init().then((e) => runApp(new App()));

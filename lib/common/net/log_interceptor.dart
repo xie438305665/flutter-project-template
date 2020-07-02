@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 
 /// @description:请求日志  拦截器
 /// @author xcl qq:244672784
@@ -11,6 +14,7 @@ class HttpLogInterceptor extends LogInterceptor {
 
   @override
   Future onResponse(Response response) {
+    debugPrint(jsonEncode(response.data));
     return super.onResponse(response);
   }
 

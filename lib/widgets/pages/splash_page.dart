@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zsy/routes/app_navigator.dart';
-import 'package:zsy/routes/app_route.dart';
+import 'package:flutter_project/routes/app_navigator.dart';
+import 'package:flutter_project/routes/app_route.dart';
 
-///启动页
+///广告页
 class SplashPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -15,12 +15,12 @@ class SplashState extends State {
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 1), () {
-      AppNavigator.toPushReplacementNamed(context, AppRoute.LOGIN_PAGEl);
+      AppNavigator.toPushReplacementNamed(context, AppRoute.LOGIN_PAGE);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset("images/ic_splash.jpg");
+    return Image.asset("images/ic_splash.png");
   }
 }

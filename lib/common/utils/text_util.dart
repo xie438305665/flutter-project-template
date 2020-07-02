@@ -18,7 +18,7 @@ class TextUtil {
   }
 
   static bool isStringNull(String text) {
-    return text == null || isStringEmpty(text);
+    return isObjectNull(text) || isStringEmpty(text);
   }
 
   static bool isObjectNull(Object text) {
@@ -32,5 +32,9 @@ class TextUtil {
   static bool isStringEqual(String firstText, String secondText) {
     if (isStringNull(firstText) || isStringNull(secondText)) return false;
     return firstText == secondText;
+  }
+
+  static bool isListEmpty(List<dynamic> list) {
+    return isObjectNull(list) || list.length == 0;
   }
 }

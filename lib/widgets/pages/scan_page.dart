@@ -1,36 +1,52 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zsy/common/utils/channel_util.dart';
-import 'package:zsy/common/utils/toast_util.dart';
-import 'package:zsy/routes/app_navigator.dart';
-import 'package:zsy/routes/app_route.dart';
+import 'package:flutter_project/common/net/net_request.dart';
+import 'package:flutter_project/common/res/res_colors.dart';
+import 'package:flutter_project/common/utils/channel_util.dart';
+import 'package:flutter_project/common/utils/package_info_util.dart';
+import 'package:flutter_project/common/utils/text_util.dart';
+import 'package:flutter_project/common/utils/toast_util.dart';
+import 'package:flutter_project/entity/upgrade_entity.dart';
+import 'package:flutter_project/routes/app_navigator.dart';
+import 'package:flutter_project/routes/app_route.dart';
 
 ///@description: 扫描
 ///@author xcl qq:244672784
 ///@Date 2020/4/27 14:38
 class ScanPage extends StatefulWidget {
+  ///控制是否检查App更新
+  final arguments;
+
+  ScanPage({this.arguments});
+
   @override
-  _ScanPageState createState() => _ScanPageState();
+  _ScanPageState createState() => _ScanPageState(arguments: this.arguments);
 }
 
 class _ScanPageState extends State<ScanPage> {
+  bool arguments;
   DateTime _lastPressedAt; //上次点击时间
   String _scanText;
+
+  _ScanPageState({this.arguments});
 
   @override
   void initState() {
     super.initState();
     _scanText = "二维码扫描";
+    if (!arguments) {
+      _checkedAppUpgrade();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        if (Platform.isIOS) return false;
         if (_lastPressedAt == null ||
             DateTime.now().difference(_lastPressedAt) > Duration(seconds: 1)) {
           _lastPressedAt = DateTime.now();
@@ -42,9 +58,11 @@ class _ScanPageState extends State<ScanPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: BackButton(
-            color: Colors.black,
+          leading: IconButton(
+            icon: Image.asset("images/ic_avatar_min.png"),
+            onPressed: () => AppNavigator.toPush(context, AppRoute.USER_PAGE),
           ),
+          automaticallyImplyLeading: false,
           elevation: 0,
           backgroundColor: Colors.grey[50],
           centerTitle: true,
@@ -53,13 +71,20 @@ class _ScanPageState extends State<ScanPage> {
             style: TextStyle(color: Colors.black),
           ),
         ),
-        body: Center(
+        body: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("images/ic_scan_bg.png"),
+              fit: BoxFit.fill,
+            ),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Image.asset(
-                "images/2.0x/ic_2x_qr_code_log.png",
+              Image(
+                image: AssetImage("images/ic_qr_code_log.png"),
                 width: 100,
                 height: 100,
               ),
@@ -68,9 +93,9 @@ class _ScanPageState extends State<ScanPage> {
                 width: 146,
                 height: 46,
                 child: RaisedButton(
-                  color: Colors.green,
+                  color: ResColors.greenColor,
                   elevation: 2.0,
-                  onPressed: scan,
+                  onPressed: (){},
                   child: Text(_scanText),
                   textColor: Colors.white,
                 ),
@@ -82,46 +107,21 @@ class _ScanPageState extends State<ScanPage> {
     );
   }
 
-  ///二维码扫描 相关配置https://pub.flutter-io.cn/documentation/barcode_scan/latest/
-  Future scan() async {
-    try {
-      var options = ScanOptions(
-        strings: {
-          "cancel": '取消',
-          "flash_on": '打开闪光灯',
-          "flash_off": '关闭闪光灯',
-        },
-        restrictFormat: BarcodeFormat.values,
-        useCamera: 8,
-        autoEnableFlash: false,
-      );
-
-      ScanResult scanResult = await BarcodeScanner.scan(options: options);
-      if (Platform.isAndroid) {
-        AppNavigator.toPush(context, AppRoute.SIGN_PAGE,
-            arguments: scanResult.rawContent);
-        return;
-      }
-      if (scanResult.format == null ||
-          scanResult.format == BarcodeFormat.unknown) return;
-      if (scanResult.format != BarcodeFormat.qr) {
-        ToastUtil.show("二维码不规范，无法识别");
-      } else {
-        AppNavigator.toPush(context, AppRoute.SIGN_PAGE, arguments: scanResult);
-      }
-    } on PlatformException catch (e) {
-      var result = ScanResult(
-        type: ResultType.Error,
-        format: BarcodeFormat.unknown,
-      );
-      if (e.code == BarcodeScanner.cameraAccessDenied) {
-        setState(() {
-          result.rawContent = '未授予相机权限';
-        });
-      } else {
-        result.rawContent = 'Unknown error: $e';
-      }
-      ToastUtil.show(result.rawContent);
-    }
+  ///app检测版本升级
+  _checkedAppUpgrade() async {
+    final String _version = await PackageInfoUtil.getVersion();
+    final UpgradeEntity _upgradeEntity =
+        await NetRequest.getUpgradeEntity(_version);
+    // 是否需要更新
+    final bool isUpgrade = !TextUtil.isStringEmpty(
+            _upgradeEntity.object.versionNumber) &&
+        !TextUtil.isStringEqual(_upgradeEntity.object.versionNumber, _version);
+    if (!isUpgrade) return;
+    NetRequest.appUpgrade(
+        context,
+        [_upgradeEntity.object.changeLog],
+        "发现新版本:${_upgradeEntity.object.versionNumber}",
+        _upgradeEntity.object.fileUrl,
+        TextUtil.isStringEqual(_upgradeEntity.object.forceUpdate, "1"));
   }
 }

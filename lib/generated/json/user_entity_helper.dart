@@ -1,4 +1,4 @@
-import 'package:zsy/entitys/user_entity.dart';
+import 'package:flutter_project/entity/user_entity.dart';
 
 userEntityFromJson(UserEntity data, Map<String, dynamic> json) {
   if (json['success'] != null) {

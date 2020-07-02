@@ -22,4 +22,7 @@ class NetUrl {
 
   //上传签名
   static const SAVE_SIGN_DATA = "saveSignData";
+
+  //版本检测/升级
+  static const UPGRADE_APP = "getversion";
 }

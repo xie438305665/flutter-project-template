@@ -1,6 +1,6 @@
 # flutter 项目搭建模板
 
-A new Flutter application.
+一个简单的Flutter项目模板  麻雀虽小 五脏齐全
 
 ## Getting Started
 

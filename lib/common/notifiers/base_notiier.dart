@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zsy/common/global/global_config.dart';
-import 'package:zsy/common/global/global_provider.dart';
+import 'package:flutter_project/common/global/global_config.dart';
+import 'package:flutter_project/common/global/global_provider.dart';
 
 /// @description:基类
 /// @author xcl qq:244672784

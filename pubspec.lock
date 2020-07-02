@@ -22,13 +22,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.4.0"
-  barcode_scan:
-    dependency: "direct main"
-    description:
-      path: "plugins\\barcode_scan-3.0.0"
-      relative: true
-    source: path
-    version: "3.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -78,18 +71,32 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.9"
-  fixnum:
+  file:
     dependency: transitive
     description:
-      name: fixnum
+      name: file
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.10.11"
+    version: "5.2.1"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_app_upgrade:
+    dependency: "direct main"
+    description:
+      name: flutter_app_upgrade
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.1.0"
+  flutter_keyboard_visibility:
+    dependency: "direct main"
+    description:
+      name: flutter_keyboard_visibility
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -121,6 +128,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.4"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.16.1"
   loading:
     dependency: "direct main"
     description:
@@ -156,6 +170,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.0"
+  package_info:
+    dependency: "direct main"
+    description:
+      name: package_info
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.4.1"
   path:
     dependency: transitive
     description:
@@ -169,21 +190,28 @@ packages:
       name: path_provider
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.6.7"
+    version: "1.6.11"
+  path_provider_linux:
+    dependency: transitive
+    description:
+      name: path_provider_linux
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.1+2"
   path_provider_macos:
     dependency: transitive
     description:
       name: path_provider_macos
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.0.4+1"
+    version: "0.0.4+3"
   path_provider_platform_interface:
     dependency: transitive
     description:
       name: path_provider_platform_interface
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   pedantic:
     dependency: transitive
     description:
@@ -212,13 +240,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.2"
-  protobuf:
+  process:
     dependency: transitive
     description:
-      name: protobuf
+      name: process
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.1"
+    version: "3.0.13"
   provider:
     dependency: "direct main"
     description:
@@ -246,21 +274,21 @@ packages:
       name: shared_preferences_macos
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.0.1+6"
+    version: "0.0.1+10"
   shared_preferences_platform_interface:
     dependency: transitive
     description:
       name: shared_preferences_platform_interface
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   shared_preferences_web:
     dependency: transitive
     description:
       name: shared_preferences_web
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.1.2+4"
+    version: "0.1.2+7"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -322,6 +350,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.8"
+  xdg_directories:
+    dependency: transitive
+    description:
+      name: xdg_directories
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.0"
   xml:
     dependency: transitive
     description:
@@ -330,5 +365,5 @@ packages:
     source: hosted
     version: "3.5.0"
 sdks:
-  dart: ">2.4.0 <3.0.0"
+  dart: ">=2.5.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5 <2.0.0"

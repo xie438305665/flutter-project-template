@@ -1,5 +1,5 @@
-import 'package:zsy/common/global/global_config.dart';
-import 'package:zsy/entitys/user_entity.dart';
+import 'package:flutter_project/common/global/global_config.dart';
+import 'package:flutter_project/entity/user_entity.dart';
 
 globalConfigFromJson(GlobalConfig data, Map<String, dynamic> json) {
   if (json['usereEntity'] != null) {
