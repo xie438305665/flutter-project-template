@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
@@ -42,19 +41,27 @@ class NetRequest {
   static GlobalConfig _globalConfig;
 
   //创建dio
-  static Dio dio =
-      new Dio(BaseOptions(connectTimeout: 5000, receiveTimeout: 5000));
+  static Dio dio = new Dio(BaseOptions(connectTimeout: 5000, receiveTimeout: 5000));
 
   ///初始化 dio
   static void init() async {
     _globalConfig = await GlobalConfigUtil.getGlobalConfig();
-    if (Platform.isIOS) {
-      dio.options.baseUrl = NetUrl.BASE_TESTING_URL;
+    if (GlobalProvider.isRelease) {
+      dio.options.baseUrl = NetUrl.BASE_RELEASE_URL;
     } else {
-      dio.options.baseUrl = GlobalProvider.isRelease
-          ? NetUrl.BASE_RELEASE_URL
-          : NetUrl.BASE_TESTING_URL;
+      switch (Constant.URL_TYPE) {
+        case 0:
+          dio.options.baseUrl = NetUrl.BASE_TESTING_URL;
+          break;
+        case 1:
+          dio.options.baseUrl = NetUrl.BASE_DEV_URL;
+          break;
+        default:
+          dio.options.baseUrl = NetUrl.BASE_RELEASE_URL;
+          break;
+      }
     }
+
     // 添加插件
     dio.interceptors.add(HttpLogInterceptor());
     // 添加头部

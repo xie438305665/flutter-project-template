@@ -17,6 +17,7 @@ class AppRoute {
   static const String USER_PAGE = "/userPage"; //个人中心
   static const String SIGN_SUCCESS_PAGE = "/signSuccessPage"; //签名成功信息展示
 
+  ///App全部路由路径
   static Map<String, WidgetBuilder> getRoutes() {
     return {
       LOGIN_PAGE: (context) => LoginPage(),
@@ -29,6 +30,7 @@ class AppRoute {
     };
   }
 
+  ///全局路由器管理
   static final onGenerateRoute = (RouteSettings settings) {
     final String name = settings.name;
     final Function pageContentBuilder = AppRoute.getRoutes()[name];
@@ -42,9 +44,9 @@ class AppRoute {
             builder: (context) =>
                 pageContentBuilder(context, arguments: settings.arguments));
         return route;
-      } else {
-        final Route route = MaterialPageRoute(
-            builder: (context) => pageContentBuilder(context));
+      }else{
+        final Route route =
+        MaterialPageRoute(builder: (context) => pageContentBuilder(context));
         return route;
       }
     }

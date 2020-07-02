@@ -3,16 +3,13 @@
 /// @Date 2020/5/5 15:23
 class NetUrl {
   //testing 环境
-  static const BASE_TESTING_URL =
-      "http://zsyapi.testing.xueping.com/coachio/iointerface_v2/";
+  static const BASE_TESTING_URL = "";
 
   //dev环境
-  static const BASE_DEV_URL =
-      "http://zsyapi.dev.xueping.com/coachio/iointerface_v2/";
+  static const BASE_DEV_URL = "http://zsyapi.dev.xueping.com/coachio/iointerface_v2/";
 
   //正式环境
-  static const BASE_RELEASE_URL =
-      "http://zsyapi.zhixinhuixue.com/coachio/iointerface_v2/";
+  static const BASE_RELEASE_URL = "";
 
   //登录
   static const LOGIN = "login";

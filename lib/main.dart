@@ -22,6 +22,7 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
+    //获取SP值
     GlobalConfigUtil.getGlobalConfig().then((value) => {
           setState(() {
             isLog = TextUtil.isStringNull(value.token);
@@ -33,20 +34,26 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //判断是否需要重新登录
       home: isLog ? LoginPage() : ScanPage(arguments: false,),
+      //配置命名路由管理器
       onGenerateRoute: AppRoute.onGenerateRoute,
+//      //全局的路由
+//      routes: AppRoute.getRoutes(),
       navigatorObservers: [NavigatorObserverListener()],
     );
   }
 }
 
-/// Navigator 监听
+/// Navigator监听可以配合（routes）  一般用于路由拦截做某些操作  比如 没有登录 不能跳转到下一页
 class NavigatorObserverListener extends NavigatorObserver {
+  ///入栈
   @override
   void didPush(Route route, Route previousRoute) {
     super.didPush(route, previousRoute);
   }
 
+  ///出栈
   @override
   void didPop(Route route, Route previousRoute) {
     super.didPop(route, previousRoute);

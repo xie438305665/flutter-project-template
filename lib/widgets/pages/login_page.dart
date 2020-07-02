@@ -43,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         });
     super.initState();
     _msg = "";
+    //监听键盘状态
     _keyboardState = KeyboardVisibility.isVisible;
     KeyboardVisibility.onChange.listen((bool visible) {
       setState(() {

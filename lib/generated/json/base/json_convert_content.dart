@@ -15,10 +15,12 @@ import 'package:flutter_project/generated/json/upgrade_entity_helper.dart';
 import 'package:flutter_project/generated/json/user_entity_helper.dart';
 
 class JsonConvert<T> {
+  ///map转成对象
   T fromJson(Map<String, dynamic> json) {
     return _getFromJson<T>(runtimeType, this, json);
   }
 
+  ///map转成Json
   Map<String, dynamic> toJson() {
     return _getToJson<T>(runtimeType, this);
   }
@@ -138,6 +140,7 @@ class JsonConvert<T> {
     return null;
   }
 
+  ///Json转成对象（实体类）
   static M fromJsonAsT<M>(json) {
     String type = M.toString();
     if (json is List && type.contains("List<")) {

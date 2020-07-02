@@ -8,7 +8,7 @@ import 'package:flutter_project/common/global/global_provider.dart';
 class BaseNotifier extends ChangeNotifier {
   GlobalConfig get globalConfig => GlobalProvider.globalConfig;
 
-  //数据变更 通知widget更新
+  ///数据变更 通知widget更新
   @override
   void notifyListeners() {
     GlobalProvider.updateConfig(globalConfig);

@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_project/common/net/net_request.dart';
 import 'package:flutter_project/common/res/res_colors.dart';
 import 'package:flutter_project/common/utils/channel_util.dart';
@@ -95,7 +93,9 @@ class _ScanPageState extends State<ScanPage> {
                 child: RaisedButton(
                   color: ResColors.greenColor,
                   elevation: 2.0,
-                  onPressed: (){},
+                  onPressed: (){
+                    ToastUtil.show("模板项目,已经取消改功能");
+                  },
                   child: Text(_scanText),
                   textColor: Colors.white,
                 ),

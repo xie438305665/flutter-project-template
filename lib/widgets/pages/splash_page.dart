@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project/routes/app_navigator.dart';
 import 'package:flutter_project/routes/app_route.dart';
 
-///广告页
+///@description: 广告页
+///@author xcl qq:244672784
+///@Date 2020/4/27 14:38
 class SplashPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
