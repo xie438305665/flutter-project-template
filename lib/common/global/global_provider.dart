@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_project/common/global/global_config.dart';
+import 'package:flutter_project/common/net/net_manager.dart';
 import 'package:flutter_project/common/net/net_request.dart';
 import 'package:flutter_project/common/utils/sp_util.dart';
-import 'package:flutter_project/common/utils/text_util.dart';
+import 'package:flutter_project/common/utils/check_util.dart';
 import 'package:flutter_project/constant.dart';
 import 'package:flutter_project/generated/json/base/json_convert_content.dart';
 
@@ -23,12 +24,12 @@ class GlobalProvider {
   ///初始化
   static Future init() async {
     String configValue = await SpUtil.getString(Constant.SP_CONFIG_KEY, "");
-    if (!TextUtil.isStringNull(configValue)) {
+    if (!CheckUtil.isStringNull(configValue)) {
       globalConfig =
           JsonConvert.fromJsonAsT<GlobalConfig>(jsonDecode(configValue));
     }
     debugPrint(jsonEncode(globalConfig));
-    NetRequest.init();
+    NetManager.init();
   }
 
   /// 更新GlobalConfig类

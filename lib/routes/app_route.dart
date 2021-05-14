@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_project/widgets/pages/canvas_page.dart';
-import 'package:flutter_project/widgets/pages/login_page.dart';
-import 'package:flutter_project/widgets/pages/scan_page.dart';
-import 'package:flutter_project/widgets/pages/sign_page.dart';
-import 'package:flutter_project/widgets/pages/sign_success_page.dart';
-import 'package:flutter_project/widgets/pages/user_page.dart';
+import 'package:flutter_project/pages/canvas_page.dart';
+import 'package:flutter_project/pages/login_page.dart';
+import 'package:flutter_project/pages/scan_page.dart';
+import 'package:flutter_project/pages/sign_page.dart';
+import 'package:flutter_project/pages/sign_success_page.dart';
+import 'package:flutter_project/pages/user_page.dart';
+
 import 'package:orientation/orientation.dart';
 
 ///Route

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 
-import 'text_util.dart';
+import 'check_util.dart';
 
 /// @description:加密工具类
 /// @author xcl qq:244672784
@@ -25,31 +25,31 @@ class CryptoUtil {
 
   ///加密MD5
   static String valueToMd5(Object object) {
-    if (TextUtil.isObjectNull(object)) return "";
+    if (CheckUtil.isObjectNull(object)) return "";
     return md5.convert(utf8.encode(object)).toString();
   }
 
   ///解密MD5
   static String md5ToValue(Object object) {
-    if (TextUtil.isObjectNull(object)) return "";
+    if (CheckUtil.isObjectNull(object)) return "";
     return utf8.decode(object);
   }
 
   ///加密SHA1
   static String valueToSha1(Object object) {
-    if (TextUtil.isObjectNull(object)) return "";
+    if (CheckUtil.isObjectNull(object)) return "";
     return sha1.convert(utf8.encode(object)).toString();
   }
 
   ///解密SHA1
   static String sha1ToValue(Object object) {
-    if (TextUtil.isObjectNull(object)) return "";
+    if (CheckUtil.isObjectNull(object)) return "";
     return utf8.decode(object);
   }
 
   ///登录密码 加密
   static String cryptoPassword(String password) {
-    if (TextUtil.isStringNull(password)) return "";
+    if (CheckUtil.isStringNull(password)) return "";
     return valueToMd5(valueToSha1(password));
   }
 }

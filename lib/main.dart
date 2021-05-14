@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/common/global/global_provider.dart';
-import 'package:flutter_project/common/utils/global_config_util.dart';
+import 'package:flutter_project/common/help/data_help.dart';
+import 'package:flutter_project/pages/login_page.dart';
+import 'package:flutter_project/pages/scan_page.dart';
 import 'package:flutter_project/routes/app_route.dart';
-import 'package:flutter_project/widgets/pages/login_page.dart';
-import 'package:flutter_project/widgets/pages/scan_page.dart';
 
-import 'common/utils/text_util.dart';
+import 'common/utils/check_util.dart';
 
 ///程序入口
 void main() => {runApp(App()), GlobalProvider.init()};
@@ -23,9 +23,9 @@ class _AppState extends State<App> {
   @override
   void initState() {
     //获取SP值
-    GlobalConfigUtil.getGlobalConfig().then((value) => {
+    DataHelp.getGlobalConfig().then((value) => {
           setState(() {
-            isLog = TextUtil.isStringNull(value.token);
+            isLog = CheckUtil.isStringNull(value.token);
           })
         });
     super.initState();
