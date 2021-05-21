@@ -76,7 +76,7 @@ class XText extends StatefulWidget {
     this.str, {
     Key key,
     this.align = TextAlign.center,
-    this.maxLines,
+    this.maxLines = 1,
     this.direction = TextDirection.ltr,
     this.softWrap = true,
     this.overflow = TextOverflow.ellipsis,
@@ -105,11 +105,9 @@ class XText extends StatefulWidget {
 class _XTextState extends State<XText> {
   @override
   Widget build(BuildContext context) {
-    if (CheckUtil.isObjectNull(widget.borderBuilder)) {
-      return _getBuildWidget(
-          CheckUtil.isObjectNull(widget.span) ? _getText() : _getTextRich());
-    }
-    return _getBuildWidget(_getTextBorderWidget());
+    return _getBuildWidget(!CheckUtil.isObjectNull(widget.borderBuilder)
+        ? _getTextBorderWidget()
+        : CheckUtil.isObjectNull(widget.span) ? _getText() : _getTextRich());
   }
 
   Text _getText() {
@@ -158,6 +156,7 @@ class _XTextState extends State<XText> {
         shadows: widget.shadows);
   }
 
+  ///边框Text
   Widget _getTextBorderWidget() {
     return Container(
       alignment: Alignment.center,
