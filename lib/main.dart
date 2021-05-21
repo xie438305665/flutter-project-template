@@ -8,12 +8,10 @@ import 'package:flutter_project/routes/app_route.dart';
 import 'common/utils/check_util.dart';
 import 'pages/test_page.dart';
 
+// void main() => runApp(TestPage());
 
 ///程序入口
-void main() => runApp(TestPage());
-
-// ///程序入口
-// void main() => {runApp(App()), GlobalProvider.init()};
+void main() => {runApp(App()), GlobalProvider.init()};
 
 /// @author xcl qq:244672784
 /// @Date 2020/4/25
@@ -40,7 +38,11 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       //判断是否需要重新登录
-      home: isLog ? LoginPage() : ScanPage(arguments: false,),
+      home: isLog
+          ? LoginPage()
+          : ScanPage(
+              arguments: false,
+            ),
       //配置命名路由管理器
       onGenerateRoute: AppRoute.onGenerateRoute,
 //      //全局的路由

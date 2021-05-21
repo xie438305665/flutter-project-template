@@ -111,8 +111,8 @@ class XImg extends StatefulWidget {
     this.matchTextDirection = false,
     this.gaplessPlayback = false,
     this.filterQuality = FilterQuality.low,
-    this.cacheHeight,
-    this.cacheWidth,
+    this.cacheHeight = -1,
+    this.cacheWidth = -1,
     this.clipBuilder,
     this.headers,
     this.package,
@@ -205,8 +205,13 @@ class _XImgState extends State<XImg> {
     // );
 
     return Image(
-      image: AssetImage(widget.path,
-          package: widget.package, bundle: widget.assetBundle),
+      image: widget.cacheHeight <= 0 || widget.cacheWidth <= 0
+          ? AssetImage(widget.path,
+              bundle: widget.assetBundle, package: widget.package)
+          : ExactAssetImage(widget.path,
+              scale: widget.scale,
+              bundle: widget.assetBundle,
+              package: widget.package),
       width: widget.width,
       height: widget.height,
       fit: widget.fit,
