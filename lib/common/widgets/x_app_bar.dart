@@ -16,9 +16,6 @@ class XAppBar extends StatefulWidget {
   //标题Widget
   final Widget title;
 
-  //默认标题XText
-  final String titleStr;
-
   //右边Widget
   final List<Widget> actions;
 
@@ -66,6 +63,9 @@ class XAppBar extends StatefulWidget {
 
   //默认左边XImg 点击事件
   final GestureTapCallback onLeadingPressed;
+
+  //默认标题XText
+  final String titleStr;
 
   //默认菜单
   final Widget actionMenu;
