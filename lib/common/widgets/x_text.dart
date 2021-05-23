@@ -5,7 +5,6 @@ import 'package:flutter_project/common/widgets/buidler/border_builder.dart';
 /// @description:Text封装
 /// @author xcl qq:244672784
 /// @Date 2021/5/15 13:01
-/// Text属性介绍地址 https://blog.csdn.net/chenlove1/article/details/84574651
 class XText extends StatefulWidget {
   final String str;
 
@@ -105,9 +104,9 @@ class XText extends StatefulWidget {
 class _XTextState extends State<XText> {
   @override
   Widget build(BuildContext context) {
-    return _getBuildWidget(!CheckUtil.isObjectNull(widget.borderBuilder)
+    return _getBuildWidget(!CheckUtil.isObjNull(widget.borderBuilder)
         ? _getTextBorderWidget()
-        : CheckUtil.isObjectNull(widget.span) ? _getText() : _getTextRich());
+        : CheckUtil.isObjNull(widget.span) ? _getText() : _getTextRich());
   }
 
   Text _getText() {
@@ -120,7 +119,7 @@ class _XTextState extends State<XText> {
       softWrap: widget.softWrap,
       overflow: widget.overflow,
       style:
-          CheckUtil.isObjectNull(widget.style) ? _getTextStyle() : widget.style,
+          CheckUtil.isObjNull(widget.style) ? _getTextStyle() : widget.style,
       strutStyle: widget.strutStyle,
       textScaleFactor: widget.scaleFactor,
       semanticsLabel: widget.semanticsLabel,
@@ -138,7 +137,7 @@ class _XTextState extends State<XText> {
       softWrap: widget.softWrap,
       overflow: widget.overflow,
       style:
-          CheckUtil.isObjectNull(widget.style) ? _getTextStyle() : widget.style,
+          CheckUtil.isObjNull(widget.style) ? _getTextStyle() : widget.style,
       strutStyle: widget.strutStyle,
       textScaleFactor: widget.scaleFactor,
       semanticsLabel: widget.semanticsLabel,
@@ -160,11 +159,11 @@ class _XTextState extends State<XText> {
   Widget _getTextBorderWidget() {
     return Container(
       alignment: Alignment.center,
-      margin: CheckUtil.isObjectNull(widget.borderBuilder.margin)
+      margin: CheckUtil.isObjNull(widget.borderBuilder.margin)
           ? EdgeInsets.all(0)
           : widget.borderBuilder.margin,
-      child: CheckUtil.isObjectNull(widget.borderBuilder.padding)
-          ? CheckUtil.isObjectNull(widget.span) ? _getText() : _getTextRich()
+      child: CheckUtil.isObjNull(widget.borderBuilder.padding)
+          ? CheckUtil.isObjNull(widget.span) ? _getText() : _getTextRich()
           : Padding(
               padding: widget.borderBuilder.padding,
               child: _getText(),
@@ -180,8 +179,8 @@ class _XTextState extends State<XText> {
   }
 
   Widget _getBuildWidget(Widget childWidget) {
-    return CheckUtil.isObjectNull(widget.onPressed) &&
-            CheckUtil.isObjectNull(widget.onLongPressed)
+    return CheckUtil.isObjNull(widget.onPressed) &&
+            CheckUtil.isObjNull(widget.onLongPressed)
         ? childWidget
         : GestureDetector(
             child: childWidget,

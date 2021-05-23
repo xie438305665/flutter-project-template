@@ -110,8 +110,8 @@ class _UserPageState extends State<UserPage> {
                     return Column(
                       children: <Widget>[
                         Text(
-                          CheckUtil.isObjectNull(user.data) ||
-                                  CheckUtil.isObjectNull(user.data.userName)
+                          CheckUtil.isObjNull(user.data) ||
+                                  CheckUtil.isObjNull(user.data.userName)
                               ? ""
                               : "${user.data.userName}",
                           style: TextStyle(
@@ -121,8 +121,8 @@ class _UserPageState extends State<UserPage> {
                           height: 10,
                         ),
                         Text(
-                          CheckUtil.isObjectNull(user.data) ||
-                                  CheckUtil.isObjectNull(user.data.schoolName)
+                          CheckUtil.isObjNull(user.data) ||
+                                  CheckUtil.isObjNull(user.data.schoolName)
                               ? ""
                               : "${user.data.schoolName}",
                         ),
@@ -156,14 +156,14 @@ class _UserPageState extends State<UserPage> {
     final String _version = await PackageInfoUtil.getVersion();
     final UpgradeEntity _upgradeEntity =
         await NetRequest.getUpgradeEntity(_version);
-    if (CheckUtil.isObjectNull(_upgradeEntity)) {
+    if (CheckUtil.isObjNull(_upgradeEntity)) {
       ToastUtil.show("网络异常，检查版本失败");
       return;
     }
     // 是否需要更新
-    final bool isUpgrade = !CheckUtil.isStringEmpty(
+    final bool isUpgrade = !CheckUtil.isStrEmpty(
             _upgradeEntity.object.versionNumber) &&
-        !CheckUtil.isStringEqual(_upgradeEntity.object.versionNumber, _version);
+        !CheckUtil.isStrEqual(_upgradeEntity.object.versionNumber, _version);
     if (!isUpgrade) {
       ToastUtil.show("已经是最新版本了");
       return;

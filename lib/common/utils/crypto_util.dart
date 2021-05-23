@@ -25,31 +25,31 @@ class CryptoUtil {
 
   ///加密MD5
   static String valueToMd5(Object object) {
-    if (CheckUtil.isObjectNull(object)) return "";
+    if (CheckUtil.isObjNull(object)) return "";
     return md5.convert(utf8.encode(object)).toString();
   }
 
   ///解密MD5
   static String md5ToValue(Object object) {
-    if (CheckUtil.isObjectNull(object)) return "";
+    if (CheckUtil.isObjNull(object)) return "";
     return utf8.decode(object);
   }
 
   ///加密SHA1
   static String valueToSha1(Object object) {
-    if (CheckUtil.isObjectNull(object)) return "";
+    if (CheckUtil.isObjNull(object)) return "";
     return sha1.convert(utf8.encode(object)).toString();
   }
 
   ///解密SHA1
   static String sha1ToValue(Object object) {
-    if (CheckUtil.isObjectNull(object)) return "";
+    if (CheckUtil.isObjNull(object)) return "";
     return utf8.decode(object);
   }
 
   ///登录密码 加密
   static String cryptoPassword(String password) {
-    if (CheckUtil.isStringNull(password)) return "";
+    if (CheckUtil.isStrNull(password)) return "";
     return valueToMd5(valueToSha1(password));
   }
 }

@@ -74,7 +74,7 @@ class _CanvasPageState extends State<CanvasPage> {
                   onPressed: () async {
                     if (CheckUtil.isListEmpty(_points)) return;
                     String path = await _getPath(_globalKey);
-                    if (CheckUtil.isStringNull(path)) return;
+                    if (CheckUtil.isStrNull(path)) return;
                     AppNavigator.toPop(context, arguments: path);
                     OrientationPlugin.forceOrientation(
                         DeviceOrientation.portraitUp);
@@ -86,9 +86,9 @@ class _CanvasPageState extends State<CanvasPage> {
             backgroundColor: Colors.grey[50],
             centerTitle: true,
             title: Text(
-              CheckUtil.isObjectNull(this.arguments)
+              CheckUtil.isObjNull(this.arguments)
                   ? ""
-                  : CheckUtil.isStringNull(this.arguments.name)
+                  : CheckUtil.isStrNull(this.arguments.name)
                       ? ""
                       : this.arguments.name,
               style: TextStyle(color: Colors.black),
@@ -108,7 +108,7 @@ class _CanvasPageState extends State<CanvasPage> {
               Wrap(
                   spacing: 10,
                   runSpacing: 10,
-                  children: CheckUtil.isObjectNull(this.arguments) ||
+                  children: CheckUtil.isObjNull(this.arguments) ||
                           CheckUtil.isListEmpty(this.arguments.classes)
                       ? []
                       : List.generate(this.arguments.classes.length,

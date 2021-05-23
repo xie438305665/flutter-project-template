@@ -51,7 +51,7 @@ class _SignPageState extends State<SignPage> {
     _clazzMap = Map();
     _signMap = Map();
     try {
-      if (CheckUtil.isObjectNull(arguments)) {
+      if (CheckUtil.isObjNull(arguments)) {
         ToastUtil.show("非法扫描，不能识别的二维码");
         setState(() {
           _isShowNetStatus = true;
@@ -89,20 +89,20 @@ class _SignPageState extends State<SignPage> {
             alignment: Alignment.center,
             children: <Widget>[
               ListView(
-                children: CheckUtil.isObjectNull(_signEntity)
+                children: CheckUtil.isObjNull(_signEntity)
                     ? <Widget>[]
                     : <Widget>[
                         WarningWidget(),
                         ContentWidget(
                             "名称：",
-                            CheckUtil.isObjectNull(this._signEntity)
+                            CheckUtil.isObjNull(this._signEntity)
                                 ? ""
                                 : this._signEntity.data.name),
                         ContentWidget(
                             "类型：",
-                            CheckUtil.isObjectNull(this._signEntity)
+                            CheckUtil.isObjNull(this._signEntity)
                                 ? ""
-                                : CheckUtil.isStringNull(
+                                : CheckUtil.isStrNull(
                                         this._signEntity.data.typeName)
                                     ? ""
                                     : this._signEntity.data.typeName),
@@ -170,7 +170,7 @@ class _SignPageState extends State<SignPage> {
                                     mainAxisSpacing: 10,
                                     crossAxisSpacing: 10,
                                     childAspectRatio: 2.8),
-                            children: CheckUtil.isObjectNull(
+                            children: CheckUtil.isObjNull(
                                         this._signEntity) ||
                                     CheckUtil.isListEmpty(
                                         this._signEntity.data.classes)
@@ -184,10 +184,10 @@ class _SignPageState extends State<SignPage> {
                                           width: double.infinity,
                                           height: double.infinity,
                                           child: RaisedButton(
-                                              color: !CheckUtil.isObjectNull(
+                                              color: !CheckUtil.isObjNull(
                                                       _signMap[key])
                                                   ? Colors.grey.shade300
-                                                  : !CheckUtil.isObjectNull(
+                                                  : !CheckUtil.isObjNull(
                                                           _clazzMap[key])
                                                       ? ResColors.greenColor
                                                       : Colors.white,
@@ -202,7 +202,7 @@ class _SignPageState extends State<SignPage> {
                                                     maxLines: 1,
                                                     style: TextStyle(
                                                       color: !CheckUtil
-                                                              .isObjectNull(
+                                                              .isObjNull(
                                                                   _clazzMap[
                                                                       key])
                                                           ? Colors.white
@@ -214,7 +214,7 @@ class _SignPageState extends State<SignPage> {
                                                     maxLines: 1,
                                                     style: TextStyle(
                                                       color: !CheckUtil
-                                                              .isObjectNull(
+                                                              .isObjNull(
                                                                   _clazzMap[
                                                                       key])
                                                           ? Colors.white
@@ -224,9 +224,9 @@ class _SignPageState extends State<SignPage> {
                                                 ],
                                               ),
                                               onPressed: () {
-                                                if (!CheckUtil.isObjectNull(
+                                                if (!CheckUtil.isObjNull(
                                                     _signMap[key])) return;
-                                                if (CheckUtil.isObjectNull(
+                                                if (CheckUtil.isObjNull(
                                                     _clazzMap[key])) {
                                                   _clazzMap[key] = item;
                                                 } else {
@@ -243,7 +243,7 @@ class _SignPageState extends State<SignPage> {
                                               image: AssetImage(
                                                   "images/ic_checked.png"),
                                             ),
-                                            offstage: CheckUtil.isObjectNull(
+                                            offstage: CheckUtil.isObjNull(
                                                 _clazzMap[key]),
                                           ),
                                           alignment: Alignment.bottomRight,
@@ -261,7 +261,7 @@ class _SignPageState extends State<SignPage> {
                               width: double.infinity,
                               height: 200,
                               color: Colors.white,
-                              child: CheckUtil.isStringNull(_signPath)
+                              child: CheckUtil.isStrNull(_signPath)
                                   ? Text("点击签名")
                                   : Image(image: ImageFile(File(_signPath)))),
                           onTap: () {
@@ -285,7 +285,7 @@ class _SignPageState extends State<SignPage> {
                           width: double.infinity,
                           child: RaisedButton(
                               elevation: 2.0,
-                              color: CheckUtil.isStringNull(_signPath)
+                              color: CheckUtil.isStrNull(_signPath)
                                   ? Colors.grey.shade300
                                   : ResColors.greenColor,
                               textColor: Colors.white,
@@ -349,7 +349,7 @@ class _SignPageState extends State<SignPage> {
 
   ///获取产品信息
   _getProductDetail(String type, String id, bool isRefresh) async {
-    if (CheckUtil.isStringNull(type) || CheckUtil.isStringNull(id)) {
+    if (CheckUtil.isStrNull(type) || CheckUtil.isStrNull(id)) {
       ToastUtil.show("参数不能为空");
       return null;
     }
@@ -358,7 +358,7 @@ class _SignPageState extends State<SignPage> {
       _isShowNetStatus = false;
     });
     SignEntity signEntity = await NetRequest.getProductDetail(type, id);
-    if (CheckUtil.isObjectNull(signEntity)) {
+    if (CheckUtil.isObjNull(signEntity)) {
       ToastUtil.show("网络异常,请求失败");
       setState(() {
         _isNetEmpty = false;
@@ -378,7 +378,7 @@ class _SignPageState extends State<SignPage> {
     }
     //默认选中班级
     var signData = signEntity.data;
-    if (!CheckUtil.isObjectNull(signData) &&
+    if (!CheckUtil.isObjNull(signData) &&
         !CheckUtil.isListEmpty(signData.classes)) {
       signData.classes.forEach((v) => {
             if (arguments.classId == v.classId && v.isSigned == 0)
@@ -396,15 +396,15 @@ class _SignPageState extends State<SignPage> {
   ///保存签名信息
   _saveSignData(String name, String id, String grade,
       Map<String, SignDataClass> clazzMap, String signPath) async {
-    if (CheckUtil.isStringNull(_signPath)) {
+    if (CheckUtil.isStrNull(_signPath)) {
       ToastUtil.show("缺少产品/考试名称");
       return;
     }
-    if (CheckUtil.isStringNull(arguments.id)) {
+    if (CheckUtil.isStrNull(arguments.id)) {
       ToastUtil.show("缺少Id");
       return;
     }
-    if (CheckUtil.isStringNull(_signPath)) {
+    if (CheckUtil.isStrNull(_signPath)) {
       ToastUtil.show("缺少年级");
       return;
     }
@@ -412,7 +412,7 @@ class _SignPageState extends State<SignPage> {
       ToastUtil.show("缺少班级");
       return;
     }
-    if (CheckUtil.isStringNull(_signPath)) {
+    if (CheckUtil.isStrNull(_signPath)) {
       ToastUtil.show("缺少签名文件");
       return;
     }

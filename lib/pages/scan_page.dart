@@ -113,15 +113,15 @@ class _ScanPageState extends State<ScanPage> {
     final UpgradeEntity _upgradeEntity =
         await NetRequest.getUpgradeEntity(_version);
     // 是否需要更新
-    final bool isUpgrade = !CheckUtil.isStringEmpty(
+    final bool isUpgrade = !CheckUtil.isStrEmpty(
             _upgradeEntity.object.versionNumber) &&
-        !CheckUtil.isStringEqual(_upgradeEntity.object.versionNumber, _version);
+        !CheckUtil.isStrEqual(_upgradeEntity.object.versionNumber, _version);
     if (!isUpgrade) return;
     NetRequest.appUpgrade(
         context,
         [_upgradeEntity.object.changeLog],
         "发现新版本:${_upgradeEntity.object.versionNumber}",
         _upgradeEntity.object.fileUrl,
-        CheckUtil.isStringEqual(_upgradeEntity.object.forceUpdate, "1"));
+        CheckUtil.isStrEqual(_upgradeEntity.object.forceUpdate, "1"));
   }
 }

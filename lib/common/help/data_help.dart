@@ -52,7 +52,7 @@ class DataHelp {
   static Future<GlobalConfig> getGlobalConfig() async {
     String str = await SpUtil.getString(Constant.SP_CONFIG_KEY, "");
     GlobalConfig _globalConfig;
-    if (CheckUtil.isStringEmpty(str)) {
+    if (CheckUtil.isStrEmpty(str)) {
       _globalConfig = new GlobalConfig();
     } else {
       _globalConfig = JsonConvert.fromJsonAsT<GlobalConfig>(jsonDecode(str));

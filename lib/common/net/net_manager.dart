@@ -73,8 +73,8 @@ class NetManager {
     // 添加插件
     dio.interceptors.add(HttpLogInterceptor());
     // 添加头部
-    if (!CheckUtil.isObjectNull(_globalConfig) &&
-        !CheckUtil.isStringNull(_globalConfig.token)) {
+    if (!CheckUtil.isObjNull(_globalConfig) &&
+        !CheckUtil.isStrNull(_globalConfig.token)) {
       dio.options.headers[HEADER] = _globalConfig.token;
     } else {
       dio.options.headers[HEADER] = "";

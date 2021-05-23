@@ -24,7 +24,7 @@ class GlobalProvider {
   ///初始化
   static Future init() async {
     String configValue = await SpUtil.getString(Constant.SP_CONFIG_KEY, "");
-    if (!CheckUtil.isStringNull(configValue)) {
+    if (!CheckUtil.isStrNull(configValue)) {
       globalConfig =
           JsonConvert.fromJsonAsT<GlobalConfig>(jsonDecode(configValue));
     }

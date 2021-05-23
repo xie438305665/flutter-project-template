@@ -31,8 +31,8 @@ class NetRequest {
       });
       UserEntity userEntity =
           JsonConvert.fromJsonAsT<UserEntity>(response.data);
-      if (!CheckUtil.isObjectNull(userEntity) &&
-          !CheckUtil.isObjectNull(userEntity.object) &&
+      if (!CheckUtil.isObjNull(userEntity) &&
+          !CheckUtil.isObjNull(userEntity.object) &&
           userEntity.success == 1) {
         UserObject userObject = userEntity.object;
         UserObjectUser userObjectUser = userObject.user;
@@ -110,12 +110,12 @@ class NetRequest {
   static Future<UpgradeEntity> getUpgradeEntity(String version) async {
     Response response = await NetManager.postHttp(NetUrl.UPGRADE_APP,
         {"versionNum": version, "softwareId": Constant.uploadKey});
-    if (CheckUtil.isObjectNull(response) || CheckUtil.isObjectNull(response.data))
+    if (CheckUtil.isObjNull(response) || CheckUtil.isObjNull(response.data))
       return null;
     final UpgradeEntity _upgradeEntity =
         JsonConvert.fromJsonAsT<UpgradeEntity>(response.data);
-    if (CheckUtil.isObjectNull(_upgradeEntity) ||
-        CheckUtil.isObjectNull(_upgradeEntity.object)) return null;
+    if (CheckUtil.isObjNull(_upgradeEntity) ||
+        CheckUtil.isObjNull(_upgradeEntity.object)) return null;
     return _upgradeEntity;
   }
 }

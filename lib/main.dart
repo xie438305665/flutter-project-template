@@ -28,7 +28,7 @@ class _AppState extends State<App> {
     //获取SP值
     DataHelp.getGlobalConfig().then((value) => {
           setState(() {
-            isLog = CheckUtil.isStringNull(value.token);
+            isLog = CheckUtil.isStrNull(value.token);
           })
         });
     super.initState();

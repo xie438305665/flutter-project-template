@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+///裁剪枚举
+enum ClipType{
+  oval,
+  rect,
+  rRect,
+  path,
+}
+
 class ClipBuilder {
-  static const OVAL = 100;
-
-  static const RECT = 101;
-
-  static const RRECT = 102;
-
-  static const PATH = 103;
-
   //裁剪类型
-  final int clipType;
+  final ClipType clipType;
   final Clip clipBehavior;
   final CustomClipper<Rect> clipper;
 
@@ -19,7 +19,7 @@ class ClipBuilder {
   final BorderRadius borderRadius;
 
   const ClipBuilder({
-    this.clipType = OVAL,
+    this.clipType = ClipType.oval,
     this.clipBehavior,
     this.clipper,
     this.borderRadius,

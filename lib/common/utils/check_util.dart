@@ -17,24 +17,24 @@ class CheckUtil {
     return _checkUtil;
   }
 
-  static bool isStringNull(String text) {
-    return isObjectNull(text) || isStringEmpty(text);
+  static bool isStrNull(String value) {
+    return isObjNull(value) || isStrEmpty(value);
   }
 
-  static bool isObjectNull(Object text) {
-    return text == null;
+  static bool isObjNull(Object value) {
+    return value == null;
   }
 
-  static bool isStringEmpty(String text) {
-    return text.length == 0 || text == "";
+  static bool isStrEmpty(String value) {
+    return value.length == 0 || value == "";
   }
 
-  static bool isStringEqual(String firstText, String secondText) {
-    if (isStringNull(firstText) || isStringNull(secondText)) return false;
-    return firstText == secondText;
+  static bool isStrEqual(String firstVal, String secondVal) {
+    if (isStrNull(firstVal) || isStrNull(secondVal)) return false;
+    return firstVal == secondVal;
   }
 
-  static bool isListEmpty(List<dynamic> list) {
-    return isObjectNull(list) || list.length == 0;
+  static bool isListEmpty(List<dynamic> value) {
+    return isObjNull(value) || value.length == 0;
   }
 }

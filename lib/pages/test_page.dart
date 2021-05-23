@@ -22,7 +22,7 @@ class _TestPageState extends State<TestPage> {
         body: Container(
           child: XImg(
             "images/ic_login_password.png",
-            type: XImg.ASSET,
+            type: XImgType.file,
             onPressed: () => {debugPrint("点击")},
           ),
         ),

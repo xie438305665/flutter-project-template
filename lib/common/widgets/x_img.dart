@@ -9,19 +9,11 @@ import 'package:flutter_project/common/widgets/buidler/clip_builder.dart';
 /// @author xcl qq:244672784
 /// @Date 2021/5/15 13:01
 class XImg extends StatefulWidget {
-  static const FILE = 0;
-
-  static const ASSET = 1;
-
-  static const NETWORK = 2;
-
-  static const MEMORY = 3;
-
   //路径
   final dynamic path;
 
   //类型
-  final int type;
+  final XImgType type;
   final AssetBundle assetBundle;
 
   //加载过程中添加动画
@@ -93,7 +85,7 @@ class XImg extends StatefulWidget {
   XImg(
     this.path, {
     Key key,
-    this.type = ASSET,
+    this.type = XImgType.asset,
     this.assetBundle,
     this.frameBuilder,
     this.loadingBuilder,
@@ -127,8 +119,9 @@ class XImg extends StatefulWidget {
 class _XImgState extends State<XImg> {
   @override
   Widget build(BuildContext context) {
-    return _getBuildWidget(
-        widget.clipBuilder == null ? _getImgWidget() : _getClipWidget());
+    return _getBuildWidget(CheckUtil.isObjNull(widget.clipBuilder)
+        ? _getImgWidget()
+        : _getClipWidget());
   }
 
   ///文件
@@ -256,13 +249,13 @@ class _XImgState extends State<XImg> {
   ///根据类型获取Image
   Widget _getImgWidget() {
     switch (widget.type) {
-      case XImg.FILE:
+      case XImgType.file:
         return _getImageFile();
-      case XImg.ASSET:
+      case XImgType.asset:
         return _getImageAsset();
-      case XImg.NETWORK:
+      case XImgType.netWork:
         return _getImageNetWork();
-      case XImg.MEMORY:
+      case XImgType.memory:
         return _getImageMemory();
       default:
         return _getImageNetWork();
@@ -272,25 +265,25 @@ class _XImgState extends State<XImg> {
   ///根据类型裁剪
   Widget _getClipWidget() {
     switch (widget.clipBuilder.clipType) {
-      case ClipBuilder.OVAL:
+      case ClipType.oval:
         return ClipOval(
           child: _getImgWidget(),
           clipBehavior: widget.clipBuilder.clipBehavior,
           clipper: widget.clipBuilder.clipper,
         );
-      case ClipBuilder.RECT:
+      case ClipType.rect:
         return ClipRect(
           child: _getImgWidget(),
           clipBehavior: widget.clipBuilder.clipBehavior,
           clipper: widget.clipBuilder.clipper,
         );
-      case ClipBuilder.RRECT:
+      case ClipType.rRect:
         return ClipRRect(
           child: _getImgWidget(),
           clipBehavior: widget.clipBuilder.clipBehavior,
           borderRadius: widget.clipBuilder.borderRadius,
         );
-      case ClipBuilder.PATH:
+      case ClipType.path:
         return ClipPath(
           child: _getImgWidget(),
           clipBehavior: widget.clipBuilder.clipBehavior,
@@ -299,8 +292,8 @@ class _XImgState extends State<XImg> {
   }
 
   Widget _getBuildWidget(Widget childWidget) {
-    return CheckUtil.isObjectNull(widget.onPressed) &&
-            CheckUtil.isObjectNull(widget.onLongPressed)
+    return CheckUtil.isObjNull(widget.onPressed) &&
+            CheckUtil.isObjNull(widget.onLongPressed)
         ? childWidget
         : GestureDetector(
             child: childWidget,
@@ -308,4 +301,12 @@ class _XImgState extends State<XImg> {
             onLongPress: widget.onLongPressed,
           );
   }
+}
+
+///枚举
+enum XImgType {
+  file,
+  asset,
+  netWork,
+  memory,
 }

@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     DataHelp.getGlobalConfig().then((value) => {
-          if (CheckUtil.isStringNull(value.token)) {_checkedAppUpgrade()}
+          if (CheckUtil.isStrNull(value.token)) {_checkedAppUpgrade()}
         });
     super.initState();
     _msg = "";
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                                   textInputAction: TextInputAction.done,
                                 ),
                                 Offstage(
-                                    offstage: CheckUtil.isStringNull(_msg),
+                                    offstage: CheckUtil.isStrNull(_msg),
                                     child: Container(
                                       margin: EdgeInsets.only(left: 30),
                                       child: Text(
@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async {
                         if (!_isShowLoading) return;
                         if (_isForce &&
-                            !CheckUtil.isObjectNull(_upgradeEntity)) {
+                            !CheckUtil.isObjNull(_upgradeEntity)) {
                           ToastUtil.show("请先更新版本");
                           NetRequest.appUpgrade(
                               context,
@@ -168,8 +168,8 @@ class _LoginPageState extends State<LoginPage> {
                               this._isForce);
                           return;
                         }
-                        if (CheckUtil.isStringNull(this._userName) ||
-                            CheckUtil.isStringNull(this._password)) {
+                        if (CheckUtil.isStrNull(this._userName) ||
+                            CheckUtil.isStrNull(this._password)) {
                           ToastUtil.show("账号密码为空");
                           return;
                         }
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                         UserEntity userEntity = await NetRequest.login(
                             this._userName,
                             CryptoUtil.cryptoPassword(this._password));
-                        if (CheckUtil.isObjectNull(userEntity)) {
+                        if (CheckUtil.isObjNull(userEntity)) {
                           ToastUtil.show("网络异常，请求失败");
                           setState(() {
                             _isShowLoading = true;
@@ -219,14 +219,14 @@ class _LoginPageState extends State<LoginPage> {
     final UpgradeEntity _upgradeEntity =
         await NetRequest.getUpgradeEntity(_version);
     // 是否需要更新
-    final bool isUpgrade = !CheckUtil.isStringEmpty(
+    final bool isUpgrade = !CheckUtil.isStrEmpty(
             _upgradeEntity.object.versionNumber) &&
-        !CheckUtil.isStringEqual(_upgradeEntity.object.versionNumber, _version);
+        !CheckUtil.isStrEqual(_upgradeEntity.object.versionNumber, _version);
     this._upgrade = true;
     if (!isUpgrade) return;
     // 是否强制更新
     this._isForce =
-        CheckUtil.isStringEqual(_upgradeEntity.object.forceUpdate, "1");
+        CheckUtil.isStrEqual(_upgradeEntity.object.forceUpdate, "1");
     this._upgradeEntity = _upgradeEntity;
     NetRequest.appUpgrade(
         context,
