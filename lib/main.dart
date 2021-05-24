@@ -8,10 +8,10 @@ import 'package:flutter_project/routes/app_route.dart';
 import 'common/utils/check_util.dart';
 import 'pages/test_page.dart';
 
-// void main() => runApp(TestPage());
+void main() => runApp(TestPage());
 
-///程序入口
-void main() => {runApp(App()), GlobalProvider.init()};
+// ///程序入口
+// void main() => {runApp(App()), GlobalProvider.init()};
 
 /// @author xcl qq:244672784
 /// @Date 2020/4/25

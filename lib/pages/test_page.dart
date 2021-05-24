@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_project/common/res/res_colors.dart';
-import 'package:flutter_project/common/widgets/buidler/clip_builder.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_project/common/widgets/x_app_bar.dart';
 import 'package:flutter_project/common/widgets/x_img.dart';
-import 'package:flutter_project/common/widgets/x_text.dart';
+import 'package:flutter_project/common/widgets/x_navigation_bar.dart';
 
 /// @description:
 /// @author xcl qq:244672784
@@ -22,14 +20,18 @@ class _TestPageState extends State<TestPage> {
         body: Container(
           child: XImg(
             "images/ic_login_password.png",
-            type: XImgType.file,
             onPressed: () => {debugPrint("点击")},
           ),
         ),
-        appBar: AppBar(
-          centerTitle: true,
-          title: Image.asset("images/ic_login_password.png",),
+        appBar: XAppBar(titleStr: "测试"),
+        bottomNavigationBar: XNavigationBar(isBottomAppBar: true),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.add,
+            color: Colors.red,
+          ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }

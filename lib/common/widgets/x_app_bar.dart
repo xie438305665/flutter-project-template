@@ -6,7 +6,7 @@ import 'package:flutter_project/common/widgets/x_text.dart';
 /// @description:
 /// @author xcl qq:244672784
 /// @Date 2021/5/15 13:03
-class XAppBar extends StatefulWidget {
+class XAppBar extends StatefulWidget implements PreferredSizeWidget {
   //左边Widget
   final Widget leading;
 
@@ -106,6 +106,10 @@ class XAppBar extends StatefulWidget {
 
   @override
   _XAppBarState createState() => _XAppBarState();
+
+  @override
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize?.height ?? 0.0));
 }
 
 class _XAppBarState extends State<XAppBar> {
@@ -117,7 +121,7 @@ class _XAppBarState extends State<XAppBar> {
       automaticallyImplyLeading: widget.automaticallyImplyLeading,
       actions: _getActions(),
       flexibleSpace: widget.flexibleSpace,
-      bottom: _getBottom(),
+      bottom: widget.bottom,
       elevation: widget.elevation,
       shape: widget.shape,
       backgroundColor: widget.backgroundColor,
@@ -135,7 +139,7 @@ class _XAppBarState extends State<XAppBar> {
 
   ///Leading
   Widget _getLeading(BuildContext context) {
-    return !CheckUtil.isStrEmpty(widget.leadingPath)
+    return !CheckUtil.isStrNull(widget.leadingPath)
         ? XImg(widget.leadingPath,
             onPressed: CheckUtil.isObjNull(widget.onLeadingPressed)
                 ? () => Navigator.maybePop(context)
@@ -145,7 +149,7 @@ class _XAppBarState extends State<XAppBar> {
 
   ///Title
   Widget _getTitle() {
-    return !CheckUtil.isStrEmpty(widget.titleStr)
+    return !CheckUtil.isStrNull(widget.titleStr)
         ? XText(widget.titleStr)
         : widget.title;
   }
@@ -156,15 +160,10 @@ class _XAppBarState extends State<XAppBar> {
     if (!CheckUtil.isObjNull(widget.actionMenu)) {
       actions.add(widget.actionMenu);
     }
-    if (!CheckUtil.isStrEmpty(widget.actionIconPath)) {
+    if (!CheckUtil.isStrNull(widget.actionIconPath)) {
       actions.add(
           XImg(widget.actionIconPath, onPressed: widget.onActionIconPressed));
     }
-    return CheckUtil.isListEmpty(widget.actions) ? actions : widget.actions;
-  }
-
-  ///TODO
-  Widget _getBottom() {
-    return Container();
+    return CheckUtil.isListEmpty(widget.actions) ? widget.actions : actions;
   }
 }
